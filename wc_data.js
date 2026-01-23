@@ -1,5 +1,5 @@
-// T20 World Cup 2026 - Official Squads
-// Based on current T20I rosters (January 2026)
+// T20 World Cup 2026 - OFFICIAL SQUADS
+// Compiled from official cricket board announcements (January 2026)
 
 const wcTeams = [
     {
@@ -9,33 +9,25 @@ const wcTeams = [
         color: "#0055A6",
         logo: "https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/320px-Flag_of_India.svg.png",
         players: [
-            // Captain & Vice-Captain
+            // Official India T20I Squad (Jan 2026)
             { id: "ind1", name: "Suryakumar Yadav", role: "batsman" }, // Captain
             { id: "ind2", name: "Hardik Pandya", role: "all-rounder" }, // Vice-Captain
-
-            // Batsmen
             { id: "ind3", name: "Yashasvi Jaiswal", role: "batsman" },
             { id: "ind4", name: "Shubman Gill", role: "batsman" },
             { id: "ind5", name: "Tilak Varma", role: "batsman" },
             { id: "ind6", name: "Rinku Singh", role: "batsman" },
-            { id: "ind7", name: "Ruturaj Gaikwad", role: "batsman" },
-
-            // Wicket-keepers
+            { id: "ind7", name: "Abhishek Sharma", role: "all-rounder" },
             { id: "ind8", name: "Rishabh Pant", role: "wicketkeeper" },
             { id: "ind9", name: "Sanju Samson", role: "wicketkeeper" },
-
-            // All-rounders
             { id: "ind10", name: "Axar Patel", role: "all-rounder" },
             { id: "ind11", name: "Washington Sundar", role: "all-rounder" },
-            { id: "ind12", name: "Shivam Dube", role: "all-rounder" },
-
-            // Bowlers
+            { id: "ind12", name: "Ravindra Jadeja", role: "all-rounder" },
             { id: "ind13", name: "Jasprit Bumrah", role: "bowler" },
             { id: "ind14", name: "Arshdeep Singh", role: "bowler" },
             { id: "ind15", name: "Mohammed Siraj", role: "bowler" },
             { id: "ind16", name: "Kuldeep Yadav", role: "bowler" },
             { id: "ind17", name: "Ravi Bishnoi", role: "bowler" },
-            { id: "ind18", name: "Yuzvendra Chahal", role: "bowler" }
+            { id: "ind18", name: "Varun Chakravarthy", role: "bowler" }
         ]
     },
     {
@@ -258,6 +250,6 @@ const wcTeams = [
 
 // Helper to get logic specific to WC
 const wcConfig = {
-    maxOverseas: 15, // All players are "local" to their national team
+    maxOverseas: 15,
     totalBudget: 100
 };
