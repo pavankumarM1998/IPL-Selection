@@ -1,10 +1,17 @@
 // IPL Team Selection Tool - Refactored Application Logic
 
 class TeamSelector {
-    constructor() {
+    constructor(app) {
+        this.app = app;
         this.selectedTeam = null;
         this.selectedPlayers = new Array(12).fill(null); // 11 + 1 impact player
         this.init();
+    }
+
+    reset() {
+        this.selectedTeam = null;
+        this.selectedPlayers = new Array(12).fill(null);
+        this.showHomeScreen();
     }
 
     init() {
@@ -26,7 +33,7 @@ class TeamSelector {
         const teamsGrid = document.getElementById('teamsGrid');
         teamsGrid.innerHTML = '';
 
-        iplData.teams.forEach(team => {
+        this.app.data.teams.forEach(team => {
             const teamCard = this.createHomeTeamCard(team);
             teamsGrid.appendChild(teamCard);
         });
@@ -556,16 +563,24 @@ document.head.appendChild(style);
 
 // Match Schedule Manager
 class MatchSchedule {
-    constructor() {
+    constructor(app) {
+        this.app = app;
         this.currentFilter = 'all';
         this.setupMatchesEventListeners();
+    }
+
+    reset() {
+        this.renderMatches();
     }
 
     showMatchesScreen() {
         document.getElementById('homeScreen').classList.add('hidden');
         document.getElementById('teamBuilderScreen').classList.add('hidden');
         document.getElementById('matchesScreen').classList.remove('hidden');
-        document.getElementById('headerSubtitle').textContent = 'IPL 2026 Schedule';
+
+        // Set header based on tournament
+        const scheduleTitle = this.app.tournament === 'ipl' ? 'IPL 2026 Schedule' : 'T20 World Cup 2026 Schedule';
+        document.getElementById('headerSubtitle').textContent = scheduleTitle;
 
         // Update navigation buttons
         document.getElementById('navTeamsBtn').classList.remove('active');
@@ -595,10 +610,10 @@ class MatchSchedule {
         matchesList.innerHTML = '';
 
         // Filter matches
-        let filteredMatches = iplMatches.matches;
+        let filteredMatches = this.app.matches.matches;
 
         if (this.currentFilter !== 'all') {
-            filteredMatches = iplMatches.matches.filter(match => {
+            filteredMatches = this.app.matches.matches.filter(match => {
                 if (this.currentFilter === 'upcoming') {
                     return match.status === 'upcoming';
                 }
@@ -636,8 +651,8 @@ class MatchSchedule {
         });
 
         // Get team details (convert to lowercase to match team IDs)
-        const team1Data = iplData.teams.find(t => t.id === match.team1.toLowerCase()) || { shortName: match.team1 };
-        const team2Data = iplData.teams.find(t => t.id === match.team2.toLowerCase()) || { shortName: match.team2 };
+        const team1Data = this.app.data.teams.find(t => t.id === match.team1.toLowerCase()) || { shortName: match.team1 };
+        const team2Data = this.app.data.teams.find(t => t.id === match.team2.toLowerCase()) || { shortName: match.team2 };
 
         card.innerHTML = `
             <div class="match-number">
@@ -696,9 +711,15 @@ class MatchSchedule {
 // App Manager
 class App {
     constructor() {
-        this.teamSelector = new TeamSelector();
-        this.matchSchedule = new MatchSchedule();
+        this.tournament = 'ipl'; // default
+        this.data = iplData;
+        this.matches = iplMatches;
+
+        this.teamSelector = new TeamSelector(this);
+        this.matchSchedule = new MatchSchedule(this);
+
         this.setupNavigation();
+        this.setupTournamentSwitcher();
     }
 
     setupNavigation() {
@@ -718,9 +739,40 @@ class App {
         // Set Teams as active by default
         document.getElementById('navTeamsBtn').classList.add('active');
     }
+
+    setupTournamentSwitcher() {
+        const selector = document.getElementById('tournamentSelect');
+        if (selector) {
+            selector.addEventListener('change', (e) => {
+                this.switchTournament(e.target.value);
+            });
+        }
+    }
+
+    switchTournament(type) {
+        this.tournament = type;
+
+        if (type === 'ipl') {
+            this.data = iplData;
+            this.matches = iplMatches;
+            document.querySelector('.logo-text h1').textContent = 'IPL Team Selector';
+        } else {
+            // Normalize WC data to match IPL structure if needed
+            this.data = { teams: wcTeams };
+            this.matches = wcMatches;
+            document.querySelector('.logo-text h1').textContent = 'T20 WC Selector';
+        }
+
+        // Reset views
+        this.teamSelector.reset();
+        this.matchSchedule.reset();
+
+        // Return to home screen
+        document.getElementById('navTeamsBtn').click();
+    }
 }
 
 // Initialize the app when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    new App();
+    window.app = new App();
 });
