@@ -17,26 +17,81 @@ class TeamSelector {
     init() {
         this.showHomeScreen();
         this.setupEventListeners();
+        this.setupActionListeners();
     }
 
     // Show home screen with team selection
     showHomeScreen() {
-        document.getElementById('homeScreen').classList.remove('hidden');
-        document.getElementById('teamBuilderScreen').classList.add('hidden');
-        document.getElementById('headerSubtitle').textContent = 'Choose Your Team';
+        const homeScreen = document.getElementById('homeScreen');
+        const teamBuilderScreen = document.getElementById('teamBuilderScreen');
+        const matchesScreen = document.getElementById('matchesScreen');
+        const savedSquadsScreen = document.getElementById('savedSquadsScreen');
+
+        if (homeScreen) { homeScreen.classList.remove('hidden'); homeScreen.style.display = 'block'; }
+        if (teamBuilderScreen) { teamBuilderScreen.classList.add('hidden'); teamBuilderScreen.style.display = 'none'; }
+        if (matchesScreen) { matchesScreen.classList.add('hidden'); matchesScreen.style.display = 'none'; }
+        if (savedSquadsScreen) { savedSquadsScreen.classList.add('hidden'); savedSquadsScreen.style.display = 'none'; }
+
+        document.getElementById('headerSubtitle').textContent = 'Build Your Dream Team';
+
+        // Restore Main Navigation
+        const mainNav = document.getElementById('mainNav');
+        const builderActions = document.getElementById('builderActions');
+
+        if (mainNav) { mainNav.classList.remove('hidden'); mainNav.style.display = 'flex'; }
+        if (builderActions) { builderActions.classList.add('hidden'); builderActions.style.display = 'none'; }
+
+        // Update Nav Active States
+        const navTeamsBtn = document.getElementById('navTeamsBtn');
+        const navMatchesBtn = document.getElementById('navMatchesBtn');
+        const navSquadsBtn = document.getElementById('navSquadsBtn');
+
+        if (navTeamsBtn) navTeamsBtn.classList.add('active');
+        if (navMatchesBtn) navMatchesBtn.classList.remove('active');
+        if (navSquadsBtn) navSquadsBtn.classList.remove('active');
 
         this.renderTeamsGrid();
     }
 
     // Render teams grid on home screen
+    // Render teams grid on home screen
     renderTeamsGrid() {
         const teamsGrid = document.getElementById('teamsGrid');
         teamsGrid.innerHTML = '';
 
-        this.app.data.teams.forEach(team => {
-            const teamCard = this.createHomeTeamCard(team);
-            teamsGrid.appendChild(teamCard);
-        });
+        // DEBUG: Visible Check
+        if (typeof iplData === 'undefined') {
+            teamsGrid.innerHTML = '<div style="color:red; font-size:20px; text-align:center; grid-column:1/-1;">ERROR: iplData variable is undefined. data.js failed to load.</div>';
+            return;
+        }
+
+        if (!this.app.data || !this.app.data.teams || this.app.data.teams.length === 0) {
+            // Try to recover from iplData directly if app.data is empty
+            if (iplData && iplData.teams) {
+                this.app.data = iplData;
+            } else {
+                teamsGrid.innerHTML = '<div style="color:red; font-size:20px; text-align:center; grid-column:1/-1;">NO TEAMS DATA FOUND. <br> Please check data.js</div>';
+                return;
+            }
+        }
+
+        try {
+            this.app.data.teams.forEach(team => {
+                try {
+                    const teamCard = this.createHomeTeamCard(team);
+                    if (teamCard) teamsGrid.appendChild(teamCard);
+                } catch (err) {
+                    console.error("Error creating card for team:", team, err);
+                }
+            });
+
+            if (this.app.data.teams.length === 0) {
+                teamsGrid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:2rem;">No teams found.</div>';
+            }
+        } catch (e) {
+            console.error("Critical Render Error", e);
+            teamsGrid.innerHTML = `<div style="color:red">Render Error: ${e.message}</div>`;
+        }
     }
 
     // Create team card for home screen
@@ -91,155 +146,83 @@ class TeamSelector {
 
     // Render header buttons for team builder screen
     renderHeaderButtons() {
-        const headerActions = document.getElementById('headerActions');
-        headerActions.innerHTML = `
-            <button class="btn-secondary" id="backBtn">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="19" y1="12" x2="5" y2="12"></line>
-                    <polyline points="12 19 5 12 12 5"></polyline>
-                </svg>
-                Back
-            </button>
-            <button class="btn-secondary" id="saveBtn">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/>
-                    <polyline points="17 21 17 13 7 13 7 21"/>
-                    <polyline points="7 3 7 8 15 8"/>
-                </svg>
-                Save
-            </button>
-            <button class="btn-secondary" id="exportBtn">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
-                    <polyline points="7 10 12 15 17 10"/>
-                    <line x1="12" y1="15" x2="12" y2="3"/>
-                </svg>
-                Export
-            </button>
-            <button class="btn-secondary" id="clearAllBtn">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
-                </svg>
-                Clear All
-            </button>
-        `;
+        const mainNav = document.getElementById('mainNav');
+        const builderActions = document.getElementById('builderActions');
 
-        // Add event listeners
-        document.getElementById('backBtn').addEventListener('click', () => this.showHomeScreen());
-        document.getElementById('saveBtn').addEventListener('click', () => this.saveSquad());
-        document.getElementById('exportBtn').addEventListener('click', () => this.exportTeam());
-        document.getElementById('clearAllBtn').addEventListener('click', () => this.clearAll());
+        if (mainNav) {
+            mainNav.classList.add('hidden');
+            mainNav.style.display = 'none'; // Force hide
+        }
+
+        if (builderActions) {
+            builderActions.classList.remove('hidden');
+            builderActions.style.display = 'flex'; // Force show
+        } else {
+            console.error('Builder Actions container not found!');
+        }
     }
 
-    // Render players list
+    setupActionListeners() {
+        const backBtn = document.getElementById('backBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const exportBtn = document.getElementById('exportBtn');
+        const clearAllBtn = document.getElementById('clearAllBtn');
+
+        if (backBtn) backBtn.addEventListener('click', () => this.showHomeScreen());
+        if (saveBtn) saveBtn.addEventListener('click', () => this.saveSquad());
+        if (exportBtn) exportBtn.addEventListener('click', () => this.exportTeam());
+        if (clearAllBtn) clearAllBtn.addEventListener('click', () => this.clearAll());
+    }
+
+    // Render players list grouped by role
     renderPlayers() {
         const playersList = document.getElementById('playersList');
         playersList.innerHTML = '';
+        playersList.scrollTop = 0; // Reset scroll
 
-        this.selectedTeam.players.forEach(player => {
-            const playerItem = this.createPlayerItem(player);
-            playersList.appendChild(playerItem);
-        });
-    }
+        if (!this.selectedTeam || !this.selectedTeam.players) return;
 
-    // Create a player item
-    createPlayerItem(player) {
-        const item = document.createElement('div');
-        item.className = 'player-item';
-        item.dataset.playerId = player.id;
-        item.dataset.playerName = player.name;
-        item.dataset.role = player.role;
-        item.draggable = true;
+        // Categories
+        const categories = [
+            { id: 'wicketkeeper', title: 'Wicket Keepers' },
+            { id: 'batsman', title: 'Batters' },
+            { id: 'all-rounder', title: 'All Rounders' },
+            { id: 'bowler', title: 'Bowlers' }
+        ];
 
-        item.innerHTML = `
-            <div class="player-details">
-                <div class="player-name">${player.name}</div>
-                <span class="player-role ${player.role}">${roleNames[player.role]}</span>
-            </div>
-            <svg class="drag-handle" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="3" y1="12" x2="21" y2="12"></line>
-                <line x1="3" y1="6" x2="21" y2="6"></line>
-                <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-        `;
-
-        // Drag events
-        item.addEventListener('dragstart', (e) => this.handleDragStart(e));
-        item.addEventListener('dragend', (e) => this.handleDragEnd(e));
-
-        return item;
-    }
-
-    // Render Playing XI board
-    renderPlayingXI() {
-        const playingXI = document.getElementById('playingXI');
-        const impactPlayerSlot = document.getElementById('impactPlayerSlot');
-
-        playingXI.innerHTML = '';
-        impactPlayerSlot.innerHTML = '';
-
-        // Render 11 main slots
-        for (let i = 0; i < 11; i++) {
-            const slot = this.createPlayerSlot(i);
-            playingXI.appendChild(slot);
-        }
-
-        // Render 1 impact player slot
-        const impactSlot = this.createPlayerSlot(11, true);
-        impactPlayerSlot.appendChild(impactSlot);
-    }
-
-    // Create a player slot
-    createPlayerSlot(index, isImpactPlayer = false) {
-        const slot = document.createElement('div');
-        slot.className = 'player-slot empty';
-        slot.dataset.slotIndex = index;
-
-        const player = this.selectedPlayers[index];
-
-        if (player) {
-            slot.classList.remove('empty');
-            slot.classList.add('filled');
-            slot.style.background = `linear-gradient(135deg, ${this.selectedTeam.color}dd, ${this.selectedTeam.color}88)`;
-            slot.innerHTML = `
-                ${!isImpactPlayer ? `<div class="slot-number">${index + 1}</div>` : ''}
-                <div class="slot-player-info">
-                    <div class="slot-player-name">${player.name}</div>
-                    <div class="slot-player-team">${this.selectedTeam.shortName}</div>
-                    <div class="slot-player-role">${roleNames[player.role]}</div>
-                </div>
-                <button class="remove-player" aria-label="Remove player">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </button>
-            `;
-
-            const removeBtn = slot.querySelector('.remove-player');
-            removeBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                this.removePlayer(index);
-            });
-        } else {
-            if (!isImpactPlayer) {
-                slot.innerHTML = `
-                    <div class="slot-number">${index + 1}</div>
-                    <div class="slot-placeholder">Drop player here</div>
+        categories.forEach(cat => {
+            const playersInRole = this.selectedTeam.players.filter(p => p.role === cat.id);
+            if (playersInRole.length > 0) {
+                // Section Header
+                const header = document.createElement('div');
+                header.className = 'role-group-header';
+                // Glassmorphism background to match theme and prevent overlapping text visibility
+                header.style.cssText = `
+                    padding: 12px 15px; 
+                    background: rgba(248, 249, 252, 0.95); 
+                    backdrop-filter: blur(5px);
+                    color: var(--color-text-secondary); 
+                    font-weight: 700; 
+                    font-size: 0.85rem; 
+                    text-transform: uppercase; 
+                    letter-spacing: 1px; 
+                    position: sticky; 
+                    top: 0; 
+                    z-index: 10; 
+                    margin-top: 0; 
+                    border-bottom: 1px solid rgba(0,0,0,0.05);
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
                 `;
-            } else {
-                slot.innerHTML = `
-                    <div class="slot-placeholder">Impact Player (Optional)</div>
-                `;
+                header.textContent = cat.title;
+                playersList.appendChild(header);
+
+                // Players
+                playersInRole.forEach(player => {
+                    const playerItem = this.createPlayerItem(player);
+                    playersList.appendChild(playerItem);
+                });
             }
-        }
-
-        // Drop events
-        slot.addEventListener('dragover', (e) => this.handleDragOver(e));
-        slot.addEventListener('dragleave', (e) => this.handleDragLeave(e));
-        slot.addEventListener('drop', (e) => this.handleDrop(e));
-
-        return slot;
+        });
     }
 
     // Drag and Drop Handlers
@@ -247,11 +230,13 @@ class TeamSelector {
         const playerId = e.currentTarget.dataset.playerId;
         const playerName = e.currentTarget.dataset.playerName;
         const role = e.currentTarget.dataset.role;
+        const nationality = e.currentTarget.dataset.nationality || 'IND';
 
         e.dataTransfer.effectAllowed = 'move';
         e.dataTransfer.setData('playerId', playerId);
         e.dataTransfer.setData('playerName', playerName);
         e.dataTransfer.setData('role', role);
+        e.dataTransfer.setData('nationality', nationality);
 
         e.currentTarget.style.opacity = '0.5';
     }
@@ -278,18 +263,291 @@ class TeamSelector {
         const playerId = e.dataTransfer.getData('playerId');
         const playerName = e.dataTransfer.getData('playerName');
         const role = e.dataTransfer.getData('role');
+        const nationality = e.dataTransfer.getData('nationality') || 'IND';
 
-        // Check if player is already selected
+        // 1. Check if player is already selected
         if (this.isPlayerSelected(playerId)) {
-            this.showWarning('This player is already in your team!');
+            this.showWarning('⚠️ This player is already in your team!');
             return;
         }
 
-        // Add player to slot
+        // 2. FOREIGN PLAYER LIMIT CHECK
+        if (nationality !== 'IND') {
+            const currentForeignCount = this.selectedPlayers.filter(p => p && p.nationality !== 'IND' && p.nationality !== undefined).length;
+            // Check if the slot we are dropping into HAS a foreign player currently (replacing one doesn't increase count)
+            const existingPlayerInSlot = this.selectedPlayers[slotIndex];
+            const isReplacingForeign = existingPlayerInSlot && existingPlayerInSlot.nationality !== 'IND';
+
+            if (currentForeignCount >= 4 && !isReplacingForeign) {
+                this.showWarning('Please select only 4 foreign players!');
+                return;
+            }
+        }
+
+        // 3. Add player to slot
         this.addPlayer(slotIndex, {
             id: playerId,
             name: playerName,
-            role: role
+            role: role,
+            nationality: nationality
+        });
+    }
+
+    // Get role icon based on player role
+    getRoleIcon(role) {
+        const icons = {
+            'batsman': '🏏',
+            'bowler': '⚾',
+            'all-rounder': '🏏⚾',
+            'wicketkeeper': '🧤'
+        };
+        return icons[role] || '🏏';
+    }
+
+    // Get nationality indicator (flight symbol for foreign players)
+    getNationalityIndicator(nationality) {
+        return nationality !== 'IND' ? '✈️' : '';
+    }
+
+    // Create a player item
+    createPlayerItem(player) {
+        const item = document.createElement('div');
+        item.className = 'player-item';
+        item.dataset.playerId = player.id;
+        item.dataset.playerName = player.name;
+        item.dataset.role = player.role;
+        item.dataset.nationality = player.nationality || 'IND';
+        item.draggable = true;
+
+        const roleIcon = this.getRoleIcon(player.role);
+        const nationalityIcon = this.getNationalityIndicator(player.nationality || 'IND');
+
+        // Safety Fallback for roleNames
+        const localRoleNames = (typeof roleNames !== 'undefined') ? roleNames : {
+            'batsman': 'Batsman',
+            'bowler': 'Bowler',
+            'all-rounder': 'All-Rounder',
+            'wicketkeeper': 'Wicketkeeper'
+        };
+
+        item.innerHTML = `
+            <div class="player-details">
+                <div class="player-name">
+                    ${player.name} ${nationalityIcon} ${roleIcon}
+                </div>
+                <span class="player-role ${player.role}">${localRoleNames[player.role] || player.role}</span>
+            </div>
+            <svg class="drag-handle" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        `;
+
+        // Drag events
+        item.addEventListener('dragstart', (e) => this.handleDragStart(e));
+        item.addEventListener('dragend', (e) => this.handleDragEnd(e));
+
+        return item;
+    }
+
+    // Render Playing XI board with Structured Groups
+    renderPlayingXI() {
+        const playingXI = document.getElementById('playingXI');
+        const impactPlayerSlot = document.getElementById('impactPlayerSlot');
+
+        if (!playingXI) return;
+
+        playingXI.innerHTML = '';
+
+        // Apply Grid Layout to the Main Container (Row-wise/Grid-wise instead of potentially Stacked)
+        playingXI.style.display = 'grid';
+        playingXI.style.gridTemplateColumns = 'repeat(2, 1fr)'; // 2 Sections per row
+        playingXI.style.gap = '20px';
+        playingXI.style.alignItems = 'start';
+
+        // Define Structure
+        const sections = [
+            { title: 'Top Order', count: 3, startIndex: 0, desc: 'Openers & No.3' },
+            { title: 'Middle Order', count: 3, startIndex: 3, desc: 'Anchors & Spin Players' },
+            { title: 'Finishers', count: 2, startIndex: 6, desc: 'Power Hitters' },
+            { title: 'Bowlers', count: 3, startIndex: 8, desc: 'Wicket Takers' }
+        ];
+
+        sections.forEach(section => {
+            // Container
+            const sectionContainer = document.createElement('div');
+            sectionContainer.className = 'xi-section-container';
+            sectionContainer.style.cssText = 'margin-bottom: 20px; background: rgba(255,255,255,0.5); padding: 15px; border-radius: 12px; border: 1px solid rgba(0,0,0,0.05);';
+
+            // Header
+            const header = document.createElement('div');
+            header.innerHTML = `
+                <div style="font-weight: 700; color: var(--color-text-primary); font-size: 0.95rem; display: flex; align-items: center; justify-content: space-between;">
+                    <span>${section.title}</span>
+                    <span style="font-size: 0.75rem; color: var(--color-text-muted); font-weight: normal;">${section.desc}</span>
+                </div>
+            `;
+            sectionContainer.appendChild(header);
+
+            // Grid
+            const grid = document.createElement('div');
+            grid.className = 'xi-section-grid';
+            grid.style.cssText = 'display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-top: 10px;';
+
+            for (let i = 0; i < section.count; i++) {
+                const globalIndex = section.startIndex + i;
+                const slot = this.createPlayerSlot(globalIndex, this.selectedPlayers[globalIndex]);
+                grid.appendChild(slot);
+            }
+
+            sectionContainer.appendChild(grid);
+            playingXI.appendChild(sectionContainer);
+        });
+
+        // Impact Player
+        if (impactPlayerSlot) {
+            impactPlayerSlot.innerHTML = '';
+            const slot = this.createPlayerSlot(11, this.selectedPlayers[11], true);
+            impactPlayerSlot.appendChild(slot);
+        }
+    }
+
+    // Create a player slot
+    createPlayerSlot(index, player, isImpactPlayer = false) {
+        const slot = document.createElement('div');
+        slot.className = `player-slot ${player ? 'filled' : 'empty'}`;
+        slot.dataset.slotIndex = index;
+
+        // Make drop target
+        slot.addEventListener('dragover', (e) => this.handleDragOver(e));
+        slot.addEventListener('dragleave', (e) => this.handleDragLeave(e));
+        slot.addEventListener('drop', (e) => this.handleDrop(e));
+
+        if (!player) {
+            slot.innerHTML = `
+                ${!isImpactPlayer ? `<div class="slot-number" style="background: rgba(0,0,0,0.05); color: #999;">${index + 1}</div>` : ''}
+                <div class="empty-slot-content">
+                    <span class="plus-icon">+</span>
+                    <span class="empty-text">Select Player</span>
+                </div>
+            `;
+        } else {
+            const roleIcon = this.getRoleIcon(player.role);
+            const nationalityIcon = this.getNationalityIndicator(player.nationality || 'IND');
+
+            // Safety Fallback for roleNames
+            const localRoleNames = (typeof roleNames !== 'undefined') ? roleNames : {
+                'batsman': 'Batsman',
+                'bowler': 'Bowler',
+                'all-rounder': 'All-Rounder',
+                'wicketkeeper': 'Wicketkeeper'
+            };
+
+            slot.style.background = `linear-gradient(135deg, ${this.selectedTeam.color}dd, ${this.selectedTeam.color}88)`;
+
+            slot.innerHTML = `
+                ${!isImpactPlayer ? `<div class="slot-number">${index + 1}</div>` : ''}
+                <div class="slot-player-info">
+                    <div class="slot-player-name">${player.name} ${nationalityIcon} ${roleIcon}</div>
+                    <div class="slot-player-team">${this.selectedTeam.shortName}</div>
+                    <div class="slot-player-role">${localRoleNames[player.role] || player.role}</div>
+                </div>
+                <button class="remove-player" aria-label="Remove player">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            `;
+
+            slot.querySelector('.remove-player').addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.removePlayer(index);
+            });
+        }
+
+        return slot;
+    }
+
+    // Drag and Drop Handlers
+    handleDragStart(e) {
+        const playerId = e.currentTarget.dataset.playerId;
+        const playerName = e.currentTarget.dataset.playerName;
+        const role = e.currentTarget.dataset.role;
+        const nationality = e.currentTarget.dataset.nationality || 'IND';
+
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('playerId', playerId);
+        e.dataTransfer.setData('playerName', playerName);
+        e.dataTransfer.setData('role', role);
+        e.dataTransfer.setData('nationality', nationality);
+
+        e.currentTarget.style.opacity = '0.5';
+    }
+
+    handleDragEnd(e) {
+        e.currentTarget.style.opacity = '1';
+    }
+
+    handleDragOver(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        e.currentTarget.classList.add('drag-over');
+    }
+
+    handleDragLeave(e) {
+        e.currentTarget.classList.remove('drag-over');
+    }
+
+    handleDrop(e) {
+        e.preventDefault();
+        e.currentTarget.classList.remove('drag-over');
+
+        const slotIndex = parseInt(e.currentTarget.dataset.slotIndex);
+        const playerId = e.dataTransfer.getData('playerId');
+        const playerName = e.dataTransfer.getData('playerName');
+        const role = e.dataTransfer.getData('role');
+        const nationality = e.dataTransfer.getData('nationality') || 'IND';
+
+        // 1. Check if player is already selected
+        if (this.isPlayerSelected(playerId)) {
+            // Check if we are dropped ONTO the same slot (no-op)
+            if (this.selectedPlayers[slotIndex] && this.selectedPlayers[slotIndex].id === playerId) {
+                return;
+            }
+            this.showToast('⚠️ Player already in team', 'warning');
+            return;
+        }
+
+        // 2. FOREIGN PLAYER LIMIT CHECK - STRICT
+        if (nationality !== 'IND') {
+            // Count EXISTING foreign players in the array loop
+            let currentForeignCount = 0;
+            for (let i = 0; i < 12; i++) {
+                if (this.selectedPlayers[i] && this.selectedPlayers[i].nationality !== 'IND') {
+                    currentForeignCount++;
+                }
+            }
+
+            // Check if the slot we are dropping into HAS a foreign player currently
+            // If we are replacing a foreign player with another foreign player, the count effectively doesn't change for validation purposes
+            const existingPlayerInSlot = this.selectedPlayers[slotIndex];
+            const isReplacingForeign = existingPlayerInSlot && existingPlayerInSlot.nationality !== 'IND';
+
+            // If count is already 4 (or more) AND we are NOT replacing an existing foreign player, BLOCK IT.
+            if (currentForeignCount >= 4 && !isReplacingForeign) {
+                this.showToast('❌ Limit Reached: Max 4 Overseas Players allowed!', 'error');
+                return;
+            }
+        }
+
+        // 3. Add player to slot
+        this.addPlayer(slotIndex, {
+            id: playerId,
+            name: playerName,
+            role: role,
+            nationality: nationality
         });
     }
 
@@ -445,28 +703,39 @@ class TeamSelector {
     }
 
     // Save squad
-    saveSquad() {
+    async saveSquad() {
         const playingXI = this.selectedPlayers.slice(0, 11).filter(p => p !== null);
         if (playingXI.length === 0) {
             alert('Please add at least one player before saving!');
             return;
         }
 
+        // Check if user is authenticated
+        if (!window.authManager || !window.authManager.isAuthenticated()) {
+            window.authManager.showAuthModal();
+            this.showWarning('Please sign in to save squads');
+            return;
+        }
+
         const squadName = prompt('Enter a name for this squad:', `${this.selectedTeam.shortName} Playing XI`);
         if (!squadName) return;
 
-        const squad = {
-            name: squadName,
-            team: this.selectedTeam.id,
-            players: this.selectedPlayers,
-            savedAt: new Date().toISOString()
-        };
+        try {
+            const squadData = {
+                name: squadName,
+                teamId: this.selectedTeam.id,
+                teamName: this.selectedTeam.name,
+                teamColor: this.selectedTeam.color,
+                teamLogo: this.selectedTeam.logo,
+                players: this.selectedPlayers
+            };
 
-        let savedSquads = JSON.parse(localStorage.getItem('iplSquads') || '[]');
-        savedSquads.push(squad);
-        localStorage.setItem('iplSquads', JSON.stringify(savedSquads));
-
-        this.showWarning(`✅ Squad "${squadName}" saved successfully!`);
+            await window.squadManager.saveSquad(squadData);
+            this.showWarning(`✅ Squad "${squadName}" saved successfully!`);
+        } catch (error) {
+            console.error('Error saving squad:', error);
+            this.showWarning('❌ Failed to save squad. Please try again.');
+        }
     }
 
     // Export team as text
@@ -574,13 +843,15 @@ class MatchSchedule {
     }
 
     showMatchesScreen() {
-        document.getElementById('homeScreen').classList.add('hidden');
-        document.getElementById('teamBuilderScreen').classList.add('hidden');
-        document.getElementById('matchesScreen').classList.remove('hidden');
+        const homeScreen = document.getElementById('homeScreen');
+        const teamBuilderScreen = document.getElementById('teamBuilderScreen');
+        const matchesScreen = document.getElementById('matchesScreen');
 
-        // Set header based on tournament
-        const scheduleTitle = this.app.tournament === 'ipl' ? 'IPL 2026 Schedule' : 'T20 World Cup 2026 Schedule';
-        document.getElementById('headerSubtitle').textContent = scheduleTitle;
+        if (homeScreen) { homeScreen.classList.add('hidden'); homeScreen.style.display = 'none'; }
+        if (teamBuilderScreen) { teamBuilderScreen.classList.add('hidden'); teamBuilderScreen.style.display = 'none'; }
+        if (matchesScreen) { matchesScreen.classList.remove('hidden'); matchesScreen.style.display = 'block'; }
+
+        document.getElementById('headerSubtitle').textContent = 'IPL 2026 Schedule';
 
         // Update navigation buttons
         document.getElementById('navTeamsBtn').classList.remove('active');
@@ -704,75 +975,163 @@ class MatchSchedule {
             </div>
         `;
 
+        // Tooltip for better UX
+        card.title = "Click to Create Fantasy Team";
+
+        // Make card clickable via attribute for robustness
+        card.style.cursor = 'pointer';
+        card.setAttribute('onclick', `window.app.matchSchedule.handleMatchClick(${match.id})`);
+
         return card;
+    }
+
+    handleMatchClick(matchId) {
+        console.log("Handling click for match ID:", matchId);
+        // Find match in app data
+        const match = this.app.matches.matches.find(m => m.id === matchId);
+
+        if (!match) {
+            console.error("Match not found:", matchId);
+            this.app.showToast("Error finding match data", "error");
+            return;
+        }
+
+        this.selectMatch(match);
+    }
+
+    selectMatch(match) {
+        console.log("Selecting Match:", match);
+
+        // Check for MatchTeamBuilder
+        if (typeof MatchTeamBuilder === 'undefined') {
+            console.error("MatchTeamBuilder class is not defined. Script might not be loaded.");
+            this.app.showToast("System Error: Match Builder component not loaded", "error");
+            return;
+        }
+
+        // Check if both teams have data
+        const team1Data = this.app.data.teams.find(t => t.id === match.team1.toLowerCase());
+        const team2Data = this.app.data.teams.find(t => t.id === match.team2.toLowerCase());
+
+        console.log("Teams Found:", {
+            t1: team1Data ? team1Data.id : 'missing',
+            t2: team2Data ? team2Data.id : 'missing'
+        });
+
+        if (!team1Data || !team2Data) {
+            this.app.showToast(`Team data missing for ${match.team1} or ${match.team2}`, 'error');
+            return;
+        }
+
+        try {
+            // Create and show match builder
+            this.app.matchBuilder = new MatchTeamBuilder(this.app, match);
+            this.app.matchBuilder.show();
+        } catch (e) {
+            console.error("Error creating MatchTeamBuilder:", e);
+            this.app.showToast("Error launching Match Builder: " + e.message, "error");
+        }
     }
 }
 
 // App Manager
 class App {
     constructor() {
-        this.tournament = 'ipl'; // default
-        this.data = iplData;
-        this.matches = iplMatches;
+        this.app = this; // Self-reference for compatibility
+        this.data = { teams: [] };
+        this.matches = { matches: [] };
 
-        this.teamSelector = new TeamSelector(this);
-        this.matchSchedule = new MatchSchedule(this);
+        // Direct Initialization
+        this.initDirect();
+    }
 
-        this.setupNavigation();
-        this.setupTournamentSwitcher();
+    initDirect() {
+        // 1. Load Data
+        if (typeof iplData !== 'undefined') {
+            this.data = iplData;
+        } else {
+            console.error("CRITICAL: iplData not found!");
+            // Fallback stub to ensure UI renders something
+            this.data = { teams: [] };
+        }
+
+        if (typeof iplMatches !== 'undefined') {
+            this.matches = iplMatches;
+        } else {
+            this.matches = { matches: [] };
+        }
+
+        // 2. Start UI when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => this.initializeApp());
+        } else {
+            // Use setTimeout to skip one tick and ensure DOM is fully parsed
+            setTimeout(() => this.initializeApp(), 0);
+        }
+    }
+
+    initializeApp() {
+        try {
+            this.teamSelector = new TeamSelector(this);
+            this.matchSchedule = new MatchSchedule(this);
+            this.setupNavigation();
+
+            // Force Show Home
+            this.teamSelector.showHomeScreen();
+
+            console.log("App Initialized Successfully");
+        } catch (e) {
+            console.error("App Initialization Failed:", e);
+            document.body.innerHTML = `<div style="color:red; padding:20px;"><h1>App Crashed</h1><p>${e.message}</p></div>`;
+        }
     }
 
     setupNavigation() {
         // Teams button
-        document.getElementById('navTeamsBtn').addEventListener('click', () => {
-            this.teamSelector.showHomeScreen();
-            document.getElementById('navTeamsBtn').classList.add('active');
-            document.getElementById('navMatchesBtn').classList.remove('active');
-            document.getElementById('matchesScreen').classList.add('hidden');
-        });
-
-        // Matches button
-        document.getElementById('navMatchesBtn').addEventListener('click', () => {
-            this.matchSchedule.showMatchesScreen();
-        });
-
-        // Set Teams as active by default
-        document.getElementById('navTeamsBtn').classList.add('active');
-    }
-
-    setupTournamentSwitcher() {
-        const selector = document.getElementById('tournamentSelect');
-        if (selector) {
-            selector.addEventListener('change', (e) => {
-                this.switchTournament(e.target.value);
+        const navTeamsBtn = document.getElementById('navTeamsBtn');
+        if (navTeamsBtn) {
+            navTeamsBtn.addEventListener('click', () => {
+                if (this.teamSelector) this.teamSelector.showHomeScreen();
             });
         }
-    }
 
-    switchTournament(type) {
-        this.tournament = type;
-
-        if (type === 'ipl') {
-            this.data = iplData;
-            this.matches = iplMatches;
-            document.querySelector('.logo-text h1').textContent = 'IPL Team Selector';
-        } else {
-            // Normalize WC data to match IPL structure if needed
-            this.data = { teams: wcTeams };
-            this.matches = wcMatches;
-            document.querySelector('.logo-text h1').textContent = 'T20 WC Selector';
+        // Matches button
+        const navMatchesBtn = document.getElementById('navMatchesBtn');
+        if (navMatchesBtn) {
+            navMatchesBtn.addEventListener('click', () => {
+                if (this.matchSchedule) this.matchSchedule.showMatchesScreen();
+            });
         }
 
-        // Reset views
-        this.teamSelector.reset();
-        this.matchSchedule.reset();
+        // My Squads button
+        const navSquadsBtn = document.getElementById('navSquadsBtn');
+        if (navSquadsBtn) {
+            navSquadsBtn.addEventListener('click', () => {
+                if (window.savedSquadsScreen) {
+                    window.savedSquadsScreen.show();
 
-        // Return to home screen
-        document.getElementById('navTeamsBtn').click();
+                    // Update active states
+                    if (navTeamsBtn) navTeamsBtn.classList.remove('active');
+                    if (navMatchesBtn) navMatchesBtn.classList.remove('active');
+                    navSquadsBtn.classList.add('active');
+                }
+            });
+        }
+
+        // Set Teams as active by default
+        if (navTeamsBtn) navTeamsBtn.classList.add('active');
+    }
+
+    // Toast helper
+    showToast(message, type = 'info') {
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        toast.textContent = message;
+        toast.style.cssText = 'position:fixed; top:20px; right:20px; background:#333; color:white; padding:10px 20px; border-radius:5px; z-index:9999;';
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
     }
 }
 
-// Initialize the app when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    window.app = new App();
-});
+// Initialize the app
+window.app = new App();
