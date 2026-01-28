@@ -1,6 +1,22 @@
 {
   "rules": {
-    ".read": true,
-    ".write": "auth != null"
+    ".read": false,
+    ".write": false,
+    "users": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    },
+    "squads": {
+      ".read": "auth != null",
+      "$squadId": {
+        ".read": "data.child('userId').val() === auth.uid",
+        ".write": "newData.child('userId').val() === auth.uid || (data.exists() && data.child('userId').val() === auth.uid)"
+      },
+      ".indexOn": [
+        "userId"
+      ]
+    }
   }
 }

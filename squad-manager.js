@@ -25,6 +25,26 @@ class SquadManager {
             throw new Error('User must be signed in to save squads');
         }
 
+        // INPUT VALIDATION
+        const name = (squadData.name || '').trim();
+        if (!name || name.length === 0) {
+            throw new Error('Squad name cannot be empty');
+        }
+        if (name.length > 30) {
+            throw new Error('Squad name must be under 30 characters');
+        }
+        // Basic sanitization (alphanumeric + spaces)
+        if (!/^[a-zA-Z0-9 ]+$/.test(name)) {
+            throw new Error('Squad name can only contain letters, numbers, and spaces');
+        }
+
+        if (!squadData.players || squadData.players.length !== 11) {
+            throw new Error('Squad must have exactly 11 players');
+        }
+
+        // Sanitize squad name for storage
+        squadData.name = name;
+
         try {
             const squadRef = firebaseFirestore
                 .collection('users')

@@ -24,8 +24,12 @@ class AuthManager {
     }
 
     // Sign in with Google
+    // Sign in with Google
     async signInWithGoogle() {
         try {
+            // Explicitly set persistence to LOCAL
+            await firebaseAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
             const result = await firebaseAuth.signInWithPopup(googleProvider);
             const user = result.user;
 
@@ -35,7 +39,17 @@ class AuthManager {
             return user;
         } catch (error) {
             console.error('Sign-in error:', error);
-            this.showToast('Sign-in failed. Please try again.', 'error');
+
+            let msg = 'Sign-in failed. Please try again.';
+            if (error.code === 'auth/popup-closed-by-user') {
+                msg = 'Sign-in cancelled.';
+            } else if (error.code === 'auth/network-request-failed') {
+                msg = 'Network error. Check your connection.';
+            } else if (error.code === 'auth/web-storage-unsupported') {
+                msg = 'Browser storage is disabled. Enable cookies/local storage.';
+            }
+
+            this.showToast(msg, 'error');
             throw error;
         }
     }

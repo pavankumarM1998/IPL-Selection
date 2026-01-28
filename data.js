@@ -113,7 +113,7 @@ const iplData = {
                 { id: 'kkr-1', name: 'Rinku Singh', role: 'batsman', nationality: 'IND' },
                 { id: 'kkr-2', name: 'Varun Chakravarthy', role: 'bowler', nationality: 'IND' },
                 { id: 'kkr-3', name: 'Sunil Narine', role: 'all-rounder', nationality: 'WI' },
-                { id: 'kkr-4', name: 'Andre Russell', role: 'all-rounder', nationality: 'WI' },
+                // Andre Russell (Retired/Coach)
                 { id: 'kkr-5', name: 'Harshit Rana', role: 'bowler', nationality: 'IND' },
                 { id: 'kkr-6', name: 'Ramandeep Singh', role: 'all-rounder', nationality: 'IND' },
                 { id: 'kkr-7', name: 'Angkrish Raghuvanshi', role: 'batsman', nationality: 'IND' },
@@ -128,7 +128,7 @@ const iplData = {
                 { id: 'kkr-16', name: 'Umran Malik', role: 'bowler', nationality: 'IND' },
                 { id: 'kkr-17', name: 'Vaibhav Arora', role: 'bowler', nationality: 'IND' },
                 { id: 'kkr-18', name: 'Akash Deep', role: 'bowler', nationality: 'IND' },
-                { id: 'kkr-19', name: 'Mustafizur Rahman', role: 'bowler', nationality: 'BAN' },
+                // Mustafizur Rahman (Released)
                 { id: 'kkr-20', name: 'Prashant Solanki', role: 'bowler', nationality: 'IND' },
                 { id: 'kkr-21', name: 'Tejasvi Singh', role: 'batsman', nationality: 'IND' },
                 { id: 'kkr-22', name: 'Daksh Kamra', role: 'batsman', nationality: 'IND' },
