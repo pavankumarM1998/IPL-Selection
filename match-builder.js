@@ -21,14 +21,19 @@ class MatchTeamBuilder {
     }
 
     show() {
-        // Hide other screens
         document.getElementById('homeScreen').classList.add('hidden');
         document.getElementById('teamBuilderScreen').classList.add('hidden');
         document.getElementById('matchesScreen').classList.add('hidden');
         document.getElementById('savedSquadsScreen').classList.add('hidden');
 
+        // Hide Team Builder specific elements just in case
+        const teamBuilder = document.querySelector('.team-builder-screen');
+        if (teamBuilder) teamBuilder.style.display = 'none';
+
         // Show match builder
-        document.getElementById('matchBuilderScreen').classList.remove('hidden');
+        const mbScreen = document.getElementById('matchBuilderScreen');
+        mbScreen.classList.remove('hidden');
+        mbScreen.style.display = 'block';
         document.getElementById('headerSubtitle').textContent = `Fantasy XI: ${this.team1Data.shortName} vs ${this.team2Data.shortName}`;
 
         this.render();
@@ -448,8 +453,13 @@ class MatchTeamBuilder {
 
     updateUI() {
         // Re-render slots
-        const slotsGrid = document.querySelector('.fantasy-slots-grid');
-        if (slotsGrid) slotsGrid.innerHTML = this.renderFantasySlots();
+        // Fix: Target the correct container ID 'fantasySquadContainer' which holds the structured view
+        const squadContainer = document.getElementById('fantasySquadContainer');
+        if (squadContainer) {
+            squadContainer.innerHTML = this.renderStructuredSquad();
+        } else {
+            console.error("Could not find fantasySquadContainer to update UI");
+        }
 
         // Re-render players list (to update checkmarks)
         const list = document.getElementById('fantasyPlayersList');
@@ -497,9 +507,38 @@ class MatchTeamBuilder {
             return;
         }
 
-        // Mock Save
-        this.showToast('Fantasy Team Saved! (Mock)', 'success');
-        // Implement Firestore save logic if needed using app.authManager etc.
+        // Valid Save Logic
+        try {
+            const user = firebase.auth().currentUser;
+            if (!user) {
+                this.showToast('Please sign in to save your team', 'error');
+                // Trigger auth modal if available
+                const authModal = document.getElementById('authModal');
+                if (authModal) authModal.classList.remove('hidden');
+                return;
+            }
+
+            const squadData = {
+                userId: user.uid,
+                matchId: this.selectedMatch.id,
+                matchName: `${this.team1Data.shortName} vs ${this.team2Data.shortName}`,
+                squad: this.fantasySquad.map(p => p ? {
+                    id: p.id,
+                    name: p.name,
+                    role: p.role,
+                    nationality: p.nationality || 'IND'
+                } : null),
+                updatedAt: firebase.database.ServerValue.TIMESTAMP
+            };
+
+            // Save to Realtime Database
+            await firebase.database().ref(`users/${user.uid}/fantasy_squads/${this.selectedMatch.id}`).set(squadData);
+
+            this.showToast('Fantasy Team Saved Successfully!', 'success');
+        } catch (error) {
+            console.error("Save Error:", error);
+            this.showToast('Failed to save team: ' + error.message, 'error');
+        }
     }
 
     // Setup generic 'Back'

@@ -1,0 +1,872 @@
+{
+  "matches": [
+    {
+      "id": 1,
+      "matchNumber": 1,
+      "date": "2026-03-31",
+      "time": "19:30",
+      "venue": "M. Chinnaswamy Stadium, Bengaluru",
+      "team1": "RCB",
+      "team2": "PBKS",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 2,
+      "matchNumber": 2,
+      "date": "2026-04-01",
+      "time": "19:30",
+      "venue": "MA Chidambaram Stadium, Chennai",
+      "team1": "CSK",
+      "team2": "MI",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 3,
+      "matchNumber": 3,
+      "date": "2026-04-02",
+      "time": "19:30",
+      "venue": "Barsapara Cricket Stadium, Guwahati",
+      "team1": "RR",
+      "team2": "KKR",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 4,
+      "matchNumber": 4,
+      "date": "2026-04-03",
+      "time": "19:30",
+      "venue": "Arun Jaitley Stadium, Delhi",
+      "team1": "DC",
+      "team2": "SRH",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 5,
+      "matchNumber": 5,
+      "date": "2026-04-04",
+      "time": "19:30",
+      "venue": "Narendra Modi Stadium, Ahmedabad",
+      "team1": "GT",
+      "team2": "LSG",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 6,
+      "matchNumber": 6,
+      "date": "2026-04-05",
+      "time": "15:30",
+      "venue": "Wankhede Stadium, Mumbai",
+      "team1": "MI",
+      "team2": "RCB",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 7,
+      "matchNumber": 7,
+      "date": "2026-04-05",
+      "time": "19:30",
+      "venue": "Punjab Cricket Association IS Bindra Stadium, Mohali",
+      "team1": "PBKS",
+      "team2": "DC",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 8,
+      "matchNumber": 8,
+      "date": "2026-04-06",
+      "time": "19:30",
+      "venue": "Eden Gardens, Kolkata",
+      "team1": "KKR",
+      "team2": "CSK",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 9,
+      "matchNumber": 9,
+      "date": "2026-04-07",
+      "time": "19:30",
+      "venue": "Rajiv Gandhi International Stadium, Hyderabad",
+      "team1": "SRH",
+      "team2": "GT",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 10,
+      "matchNumber": 10,
+      "date": "2026-04-08",
+      "time": "19:30",
+      "venue": "Bharat Ratna Shri Atal Bihari Vajpayee Ekana Cricket Stadium, Lucknow",
+      "team1": "LSG",
+      "team2": "RR",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 11,
+      "matchNumber": 11,
+      "date": "2026-04-09",
+      "time": "19:30",
+      "venue": "Punjab Cricket Association IS Bindra Stadium, Mohali",
+      "team1": "PBKS",
+      "team2": "MI",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 12,
+      "matchNumber": 12,
+      "date": "2026-04-10",
+      "time": "19:30",
+      "venue": "Arun Jaitley Stadium, Delhi",
+      "team1": "DC",
+      "team2": "CSK",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 13,
+      "matchNumber": 13,
+      "date": "2026-04-11",
+      "time": "15:30",
+      "venue": "Eden Gardens, Kolkata",
+      "team1": "KKR",
+      "team2": "SRH",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 14,
+      "matchNumber": 14,
+      "date": "2026-04-11",
+      "time": "19:30",
+      "venue": "Narendra Modi Stadium, Ahmedabad",
+      "team1": "GT",
+      "team2": "RCB",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 15,
+      "matchNumber": 15,
+      "date": "2026-04-12",
+      "time": "15:30",
+      "venue": "Barsapara Cricket Stadium, Guwahati",
+      "team1": "RR",
+      "team2": "PBKS",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 16,
+      "matchNumber": 16,
+      "date": "2026-04-12",
+      "time": "19:30",
+      "venue": "Wankhede Stadium, Mumbai",
+      "team1": "MI",
+      "team2": "LSG",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 17,
+      "matchNumber": 17,
+      "date": "2026-04-13",
+      "time": "19:30",
+      "venue": "Rajiv Gandhi International Stadium, Hyderabad",
+      "team1": "SRH",
+      "team2": "DC",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 18,
+      "matchNumber": 18,
+      "date": "2026-04-14",
+      "time": "19:30",
+      "venue": "M. Chinnaswamy Stadium, Bengaluru",
+      "team1": "RCB",
+      "team2": "KKR",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 19,
+      "matchNumber": 19,
+      "date": "2026-04-15",
+      "time": "19:30",
+      "venue": "MA Chidambaram Stadium, Chennai",
+      "team1": "CSK",
+      "team2": "RR",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 20,
+      "matchNumber": 20,
+      "date": "2026-04-16",
+      "time": "19:30",
+      "venue": "Punjab Cricket Association IS Bindra Stadium, Mohali",
+      "team1": "PBKS",
+      "team2": "GT",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 21,
+      "matchNumber": 21,
+      "date": "2026-04-17",
+      "time": "19:30",
+      "venue": "Bharat Ratna Shri Atal Bihari Vajpayee Ekana Cricket Stadium, Lucknow",
+      "team1": "LSG",
+      "team2": "SRH",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 22,
+      "matchNumber": 22,
+      "date": "2026-04-18",
+      "time": "15:30",
+      "venue": "Wankhede Stadium, Mumbai",
+      "team1": "MI",
+      "team2": "DC",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 23,
+      "matchNumber": 23,
+      "date": "2026-04-18",
+      "time": "19:30",
+      "venue": "M. Chinnaswamy Stadium, Bengaluru",
+      "team1": "RCB",
+      "team2": "CSK",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 24,
+      "matchNumber": 24,
+      "date": "2026-04-19",
+      "time": "15:30",
+      "venue": "Narendra Modi Stadium, Ahmedabad",
+      "team1": "GT",
+      "team2": "RR",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 25,
+      "matchNumber": 25,
+      "date": "2026-04-19",
+      "time": "19:30",
+      "venue": "Eden Gardens, Kolkata",
+      "team1": "KKR",
+      "team2": "PBKS",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 26,
+      "matchNumber": 26,
+      "date": "2026-04-20",
+      "time": "19:30",
+      "venue": "Arun Jaitley Stadium, Delhi",
+      "team1": "DC",
+      "team2": "LSG",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 27,
+      "matchNumber": 27,
+      "date": "2026-04-21",
+      "time": "19:30",
+      "venue": "MA Chidambaram Stadium, Chennai",
+      "team1": "CSK",
+      "team2": "SRH",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 28,
+      "matchNumber": 28,
+      "date": "2026-04-22",
+      "time": "19:30",
+      "venue": "Sawai Mansingh Stadium, Jaipur",
+      "team1": "RR",
+      "team2": "MI",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 29,
+      "matchNumber": 29,
+      "date": "2026-04-23",
+      "time": "19:30",
+      "venue": "Punjab Cricket Association IS Bindra Stadium, Mohali",
+      "team1": "PBKS",
+      "team2": "RCB",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 30,
+      "matchNumber": 30,
+      "date": "2026-04-24",
+      "time": "19:30",
+      "venue": "Eden Gardens, Kolkata",
+      "team1": "KKR",
+      "team2": "GT",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 31,
+      "matchNumber": 31,
+      "date": "2026-04-25",
+      "time": "15:30",
+      "venue": "Bharat Ratna Shri Atal Bihari Vajpayee Ekana Cricket Stadium, Lucknow",
+      "team1": "LSG",
+      "team2": "CSK",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 32,
+      "matchNumber": 32,
+      "date": "2026-04-25",
+      "time": "19:30",
+      "venue": "Rajiv Gandhi International Stadium, Hyderabad",
+      "team1": "SRH",
+      "team2": "MI",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 33,
+      "matchNumber": 33,
+      "date": "2026-04-26",
+      "time": "15:30",
+      "venue": "M. Chinnaswamy Stadium, Bengaluru",
+      "team1": "RCB",
+      "team2": "RR",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 34,
+      "matchNumber": 34,
+      "date": "2026-04-26",
+      "time": "19:30",
+      "venue": "Arun Jaitley Stadium, Delhi",
+      "team1": "DC",
+      "team2": "KKR",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 35,
+      "matchNumber": 35,
+      "date": "2026-04-27",
+      "time": "19:30",
+      "venue": "Narendra Modi Stadium, Ahmedabad",
+      "team1": "GT",
+      "team2": "PBKS",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 36,
+      "matchNumber": 36,
+      "date": "2026-04-28",
+      "time": "19:30",
+      "venue": "Wankhede Stadium, Mumbai",
+      "team1": "MI",
+      "team2": "LSG",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 37,
+      "matchNumber": 37,
+      "date": "2026-04-29",
+      "time": "19:30",
+      "venue": "MA Chidambaram Stadium, Chennai",
+      "team1": "CSK",
+      "team2": "KKR",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 38,
+      "matchNumber": 38,
+      "date": "2026-04-30",
+      "time": "19:30",
+      "venue": "Arun Jaitley Stadium, Delhi",
+      "team1": "DC",
+      "team2": "RCB",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 39,
+      "matchNumber": 39,
+      "date": "2026-05-01",
+      "time": "19:30",
+      "venue": "Sawai Mansingh Stadium, Jaipur",
+      "team1": "RR",
+      "team2": "GT",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 40,
+      "matchNumber": 40,
+      "date": "2026-05-02",
+      "time": "15:30",
+      "venue": "Wankhede Stadium, Mumbai",
+      "team1": "MI",
+      "team2": "PBKS",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 41,
+      "matchNumber": 41,
+      "date": "2026-05-02",
+      "time": "19:30",
+      "venue": "Rajiv Gandhi International Stadium, Hyderabad",
+      "team1": "SRH",
+      "team2": "KKR",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 42,
+      "matchNumber": 42,
+      "date": "2026-05-03",
+      "time": "15:30",
+      "venue": "M. Chinnaswamy Stadium, Bengaluru",
+      "team1": "RCB",
+      "team2": "DC",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 43,
+      "matchNumber": 43,
+      "date": "2026-05-03",
+      "time": "19:30",
+      "venue": "Bharat Ratna Shri Atal Bihari Vajpayee Ekana Cricket Stadium, Lucknow",
+      "team1": "LSG",
+      "team2": "MI",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 44,
+      "matchNumber": 44,
+      "date": "2026-05-04",
+      "time": "19:30",
+      "venue": "Narendra Modi Stadium, Ahmedabad",
+      "team1": "GT",
+      "team2": "CSK",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 45,
+      "matchNumber": 45,
+      "date": "2026-05-05",
+      "time": "19:30",
+      "venue": "Punjab Cricket Association IS Bindra Stadium, Mohali",
+      "team1": "PBKS",
+      "team2": "RR",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 46,
+      "matchNumber": 46,
+      "date": "2026-05-06",
+      "time": "19:30",
+      "venue": "Eden Gardens, Kolkata",
+      "team1": "KKR",
+      "team2": "LSG",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 47,
+      "matchNumber": 47,
+      "date": "2026-05-07",
+      "time": "19:30",
+      "venue": "Arun Jaitley Stadium, Delhi",
+      "team1": "DC",
+      "team2": "MI",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 48,
+      "matchNumber": 48,
+      "date": "2026-05-08",
+      "time": "19:30",
+      "venue": "Sawai Mansingh Stadium, Jaipur",
+      "team1": "RR",
+      "team2": "SRH",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 49,
+      "matchNumber": 49,
+      "date": "2026-05-09",
+      "time": "15:30",
+      "venue": "MA Chidambaram Stadium, Chennai",
+      "team1": "CSK",
+      "team2": "RCB",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 50,
+      "matchNumber": 50,
+      "date": "2026-05-09",
+      "time": "19:30",
+      "venue": "Bharat Ratna Shri Atal Bihari Vajpayee Ekana Cricket Stadium, Lucknow",
+      "team1": "LSG",
+      "team2": "PBKS",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 51,
+      "matchNumber": 51,
+      "date": "2026-05-10",
+      "time": "15:30",
+      "venue": "Narendra Modi Stadium, Ahmedabad",
+      "team1": "GT",
+      "team2": "KKR",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 52,
+      "matchNumber": 52,
+      "date": "2026-05-10",
+      "time": "19:30",
+      "venue": "Wankhede Stadium, Mumbai",
+      "team1": "MI",
+      "team2": "RR",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 53,
+      "matchNumber": 53,
+      "date": "2026-05-11",
+      "time": "19:30",
+      "venue": "Rajiv Gandhi International Stadium, Hyderabad",
+      "team1": "SRH",
+      "team2": "RCB",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 54,
+      "matchNumber": 54,
+      "date": "2026-05-12",
+      "time": "19:30",
+      "venue": "Arun Jaitley Stadium, Delhi",
+      "team1": "DC",
+      "team2": "PBKS",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 55,
+      "matchNumber": 55,
+      "date": "2026-05-13",
+      "time": "19:30",
+      "venue": "MA Chidambaram Stadium, Chennai",
+      "team1": "CSK",
+      "team2": "GT",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 56,
+      "matchNumber": 56,
+      "date": "2026-05-14",
+      "time": "19:30",
+      "venue": "Wankhede Stadium, Mumbai",
+      "team1": "MI",
+      "team2": "CSK",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 57,
+      "matchNumber": 57,
+      "date": "2026-05-15",
+      "time": "19:30",
+      "venue": "M. Chinnaswamy Stadium, Bengaluru",
+      "team1": "RCB",
+      "team2": "GT",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 58,
+      "matchNumber": 58,
+      "date": "2026-05-16",
+      "time": "15:30",
+      "venue": "Eden Gardens, Kolkata",
+      "team1": "KKR",
+      "team2": "DC",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 59,
+      "matchNumber": 59,
+      "date": "2026-05-16",
+      "time": "19:30",
+      "venue": "Punjab Cricket Association IS Bindra Stadium, Mohali",
+      "team1": "PBKS",
+      "team2": "SRH",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 60,
+      "matchNumber": 60,
+      "date": "2026-05-17",
+      "time": "15:30",
+      "venue": "Bharat Ratna Shri Atal Bihari Vajpayee Ekana Cricket Stadium, Lucknow",
+      "team1": "LSG",
+      "team2": "KKR",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 61,
+      "matchNumber": 61,
+      "date": "2026-05-17",
+      "time": "19:30",
+      "venue": "Narendra Modi Stadium, Ahmedabad",
+      "team1": "GT",
+      "team2": "MI",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 62,
+      "matchNumber": 62,
+      "date": "2026-05-18",
+      "time": "19:30",
+      "venue": "MA Chidambaram Stadium, Chennai",
+      "team1": "CSK",
+      "team2": "PBKS",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 63,
+      "matchNumber": 63,
+      "date": "2026-05-19",
+      "time": "19:30",
+      "venue": "Rajiv Gandhi International Stadium, Hyderabad",
+      "team1": "SRH",
+      "team2": "RR",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 64,
+      "matchNumber": 64,
+      "date": "2026-05-20",
+      "time": "19:30",
+      "venue": "Arun Jaitley Stadium, Delhi",
+      "team1": "DC",
+      "team2": "GT",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 65,
+      "matchNumber": 65,
+      "date": "2026-05-21",
+      "time": "19:30",
+      "venue": "Wankhede Stadium, Mumbai",
+      "team1": "MI",
+      "team2": "RCB",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 66,
+      "matchNumber": 66,
+      "date": "2026-05-22",
+      "time": "19:30",
+      "venue": "Eden Gardens, Kolkata",
+      "team1": "KKR",
+      "team2": "CSK",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 67,
+      "matchNumber": 67,
+      "date": "2026-05-23",
+      "time": "15:30",
+      "venue": "Punjab Cricket Association IS Bindra Stadium, Mohali",
+      "team1": "PBKS",
+      "team2": "RR",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 68,
+      "matchNumber": 68,
+      "date": "2026-05-23",
+      "time": "19:30",
+      "venue": "Narendra Modi Stadium, Ahmedabad",
+      "team1": "GT",
+      "team2": "SRH",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 69,
+      "matchNumber": 69,
+      "date": "2026-05-24",
+      "time": "15:30",
+      "venue": "Bharat Ratna Shri Atal Bihari Vajpayee Ekana Cricket Stadium, Lucknow",
+      "team1": "LSG",
+      "team2": "DC",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 70,
+      "matchNumber": 70,
+      "date": "2026-05-24",
+      "time": "19:30",
+      "venue": "M. Chinnaswamy Stadium, Bengaluru",
+      "team1": "RCB",
+      "team2": "MI",
+      "status": "upcoming",
+      "category": "league"
+    },
+    {
+      "id": 71,
+      "matchNumber": "Qualifier 1",
+      "date": "2026-05-28",
+      "time": "19:30",
+      "venue": "To Be Announced",
+      "team1": "TBD",
+      "team2": "TBD",
+      "status": "upcoming",
+      "category": "playoff",
+      "description": "1st vs 2nd"
+    },
+    {
+      "id": 72,
+      "matchNumber": "Eliminator",
+      "date": "2026-05-29",
+      "time": "19:30",
+      "venue": "To Be Announced",
+      "team1": "TBD",
+      "team2": "TBD",
+      "status": "upcoming",
+      "category": "playoff",
+      "description": "3rd vs 4th"
+    },
+    {
+      "id": 73,
+      "matchNumber": "Qualifier 2",
+      "date": "2026-05-30",
+      "time": "19:30",
+      "venue": "To Be Announced",
+      "team1": "TBD",
+      "team2": "TBD",
+      "status": "upcoming",
+      "category": "playoff",
+      "description": "Loser Q1 vs Winner Eliminator"
+    },
+    {
+      "id": 74,
+      "matchNumber": "Final",
+      "date": "2026-05-31",
+      "time": "19:30",
+      "venue": "To Be Announced",
+      "team1": "TBD",
+      "team2": "TBD",
+      "status": "upcoming",
+      "category": "playoff",
+      "description": "Winner Q1 vs Winner Q2"
+    }
+  ],
+  "venues": {
+    "Wankhede Stadium, Mumbai": {
+      "city": "Mumbai",
+      "capacity": "33,108"
+    },
+    "MA Chidambaram Stadium, Chennai": {
+      "city": "Chennai",
+      "capacity": "50,000"
+    },
+    "Eden Gardens, Kolkata": {
+      "city": "Kolkata",
+      "capacity": "66,349"
+    },
+    "M. Chinnaswamy Stadium, Bengaluru": {
+      "city": "Bengaluru",
+      "capacity": "40,000"
+    },
+    "Arun Jaitley Stadium, Delhi": {
+      "city": "Delhi",
+      "capacity": "41,842"
+    },
+    "Sawai Mansingh Stadium, Jaipur": {
+      "city": "Jaipur",
+      "capacity": "30,000"
+    },
+    "Rajiv Gandhi International Stadium, Hyderabad": {
+      "city": "Hyderabad",
+      "capacity": "55,000"
+    },
+    "Punjab Cricket Association IS Bindra Stadium, Mohali": {
+      "city": "Mohali",
+      "capacity": "26,950"
+    },
+    "Narendra Modi Stadium, Ahmedabad": {
+      "city": "Ahmedabad",
+      "capacity": "132,000"
+    },
+    "Bharat Ratna Shri Atal Bihari Vajpayee Ekana Cricket Stadium, Lucknow": {
+      "city": "Lucknow",
+      "capacity": "50,000"
+    },
+    "Barsapara Cricket Stadium, Guwahati": {
+      "city": "Guwahati",
+      "capacity": "40,000"
+    },
+    "To Be Announced": {
+      "city": "TBA",
+      "capacity": "N/A"
+    }
+  }
+}

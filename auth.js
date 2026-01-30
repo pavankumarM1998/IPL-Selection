@@ -8,6 +8,13 @@ class AuthManager {
     }
 
     init() {
+        // AUTO-FIX: Redirect 127.0.0.1 to localhost to allow Firebase Auth
+        if (window.location.hostname === '127.0.0.1') {
+            console.log("🔄 Redirecting to localhost for Firebase Auth compatibility...");
+            window.location.hostname = 'localhost';
+            return;
+        }
+
         // Listen for authentication state changes
         if (typeof firebaseAuth !== 'undefined') {
             firebaseAuth.onAuthStateChanged((user) => {
@@ -23,7 +30,6 @@ class AuthManager {
         }
     }
 
-    // Sign in with Google
     // Sign in with Google
     async signInWithGoogle() {
         try {
@@ -41,15 +47,24 @@ class AuthManager {
             console.error('Sign-in error:', error);
 
             let msg = 'Sign-in failed. Please try again.';
+
+            // Detailed Error Handling
             if (error.code === 'auth/popup-closed-by-user') {
                 msg = 'Sign-in cancelled.';
             } else if (error.code === 'auth/network-request-failed') {
-                msg = 'Network error. Check your connection.';
+                msg = 'Network error. Please check your internet connection.';
             } else if (error.code === 'auth/web-storage-unsupported') {
-                msg = 'Browser storage is disabled. Enable cookies/local storage.';
+                msg = 'Browser cookies are disabled. Please enable them.';
+            } else if (error.code === 'auth/unauthorized-domain') {
+                msg = 'Domain Error: Please use localhost:8000 instead of 127.0.0.1';
+            } else if (error.code === 'auth/operation-not-allowed') {
+                msg = 'Google Sign-In is not enabled in Firebase Console.';
+            } else {
+                msg = `Error: ${error.message}`;
             }
 
             this.showToast(msg, 'error');
+            // Alert removed - Issue diagnosed
             throw error;
         }
     }

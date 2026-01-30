@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IPL Team Selection Tool - Build Your Playing XI</title>
+    <title>Cricket Squad Builder - Build Your Playing XI</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="cricket_logo.svg">
     <meta name="description"
-        content="Create and manage your IPL Playing XI with our intuitive team selection tool. Organize players by teams and build your perfect lineup.">
+        content="Create and manage your Cricket Playing XI with our intuitive team selection tool. Organize players by teams and build your perfect lineup.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -23,12 +25,9 @@
         <header class="app-header">
             <div class="header-content">
                 <div class="logo-section">
-                    <div class="logo-icon">
-                        <img src="ipl_logo.png" alt="IPL Logo" width="60" height="60"
-                            style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
-                    </div>
+                    <!-- Logo Removed from Header as per request -->
                     <div class="logo-text">
-                        <h1>IPL Team Selector</h1>
+                        <h1>Cricket Squad Builder</h1>
                         <p id="headerSubtitle">Choose Your Team</p>
                     </div>
                 </div>
@@ -130,7 +129,7 @@
         <!-- Home Screen - Team Selection -->
         <div id="homeScreen" class="home-screen">
             <div class="home-header">
-                <h2>Select Your IPL Team</h2>
+                <h2>Select Your Team</h2>
                 <p>Choose a team to build your Playing XI</p>
             </div>
             <div class="teams-grid" id="teamsGrid">
@@ -207,28 +206,7 @@
             </main>
         </div>
 
-        <!-- Matches Screen -->
-        <div id="matchesScreen" class="matches-screen hidden">
-            <div class="matches-container">
-                <div class="matches-header">
-                    <h2>IPL 2026 Match Schedule</h2>
-                    <p>Complete fixture list for the Indian Premier League 2026</p>
-                </div>
 
-                <!-- Filter Tabs -->
-                <div class="match-filters">
-                    <button class="filter-tab active" data-filter="all">All Matches</button>
-                    <button class="filter-tab" data-filter="upcoming">Upcoming</button>
-                    <button class="filter-tab" data-filter="league">League Stage</button>
-                    <button class="filter-tab" data-filter="playoff">Playoffs</button>
-                </div>
-
-                <!-- Matches List -->
-                <div class="matches-list" id="matchesList">
-                    <!-- Matches will be populated by JavaScript -->
-                </div>
-            </div>
-        </div>
 
         <!-- Match Team Builder Screen -->
         <div id="matchBuilderScreen" class="match-builder-screen hidden">
@@ -331,6 +309,34 @@
                 </div>
             </div>
         </div>
+
+        <!-- Matches Screen -->
+        <div id="matchesScreen" class="matches-screen hidden">
+            <div class="matches-container">
+                <div class="matches-header">
+                    <h2>Match Schedule</h2>
+                    <p>Complete fixture list for the 2026 Season</p>
+                </div>
+
+                <!-- Filter Tabs -->
+                <div class="match-filters">
+                    <button class="filter-tab active" data-filter="all">All Matches</button>
+                    <button class="filter-tab" data-filter="upcoming">Upcoming</button>
+                    <button class="filter-tab" data-filter="league">League Stage</button>
+                    <button class="filter-tab" data-filter="playoff">Playoffs</button>
+                </div>
+
+                <!-- Matches List -->
+                <div class="matches-list" id="matchesList">
+                    <!-- Matches will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>&copy; 2026 Cricket Squad Builder. All Rights Reserved.</p>
+        </footer>
     </div>
 
 
@@ -338,20 +344,23 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
 
     <!-- Firebase Configuration -->
     <script src="firebase-config.js"></script>
 
     <!-- Scripts -->
     <!-- data.js is already loaded in head, removing duplicate or keeping here? Best to keep at bottom for blocking -->
-    <script src="data.js?v=fix_russell_v2"></script>
-    <script src="matches.js"></script>
-    <script src="auth.js"></script>
-    <script src="squad-manager.js"></script>
-    <script src="saved-squads.js"></script>
-    <script src="match-builder.js?v=match_builder_refactor_v1"></script>
-    <script src="app.js?v=match_builder_refactor_v1"></script>
+    <script src="data.js?v=19"></script>
+    <script src="matches.js?v=19"></script>
+    <!-- auth.js removed from here, loaded at bottom -->
+    <script src="squad-manager.js?v=34"></script>
+    <script src="saved-squads.js?v=34"></script>
+    <script src="match-builder.js?v=34"></script>
+    <script src="app.js?v=34"></script>
+    <script src="auth.js?v=34"></script>
 </body>
 
 </html>

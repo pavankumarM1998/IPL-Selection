@@ -19,7 +19,7 @@ class SquadManager {
         }
     }
 
-    // Save squad to Firestore
+    // Save squad to Realtime Database
     async saveSquad(squadData) {
         if (!this.currentUserId) {
             throw new Error('User must be signed in to save squads');
@@ -33,7 +33,7 @@ class SquadManager {
         if (name.length > 30) {
             throw new Error('Squad name must be under 30 characters');
         }
-        // Basic sanitization (alphanumeric + spaces)
+        // Basic sanitization
         if (!/^[a-zA-Z0-9 ]+$/.test(name)) {
             throw new Error('Squad name can only contain letters, numbers, and spaces');
         }
@@ -46,25 +46,22 @@ class SquadManager {
         squadData.name = name;
 
         try {
-            const squadRef = firebaseFirestore
-                .collection('users')
-                .doc(this.currentUserId)
-                .collection('savedSquads')
-                .doc();
+            // Generate a new key
+            const newSquadRef = firebaseDB.ref(`users/${this.currentUserId}/savedSquads`).push();
 
             const squad = {
-                id: squadRef.id,
+                id: newSquadRef.key,
                 name: squadData.name,
                 teamId: squadData.teamId,
                 teamName: squadData.teamName,
                 teamColor: squadData.teamColor,
                 teamLogo: squadData.teamLogo,
                 players: squadData.players,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                createdAt: firebase.database.ServerValue.TIMESTAMP,
+                updatedAt: firebase.database.ServerValue.TIMESTAMP
             };
 
-            await squadRef.set(squad);
+            await newSquadRef.set(squad);
 
             console.log('✅ Squad saved:', squad.name);
             return squad;
@@ -82,22 +79,21 @@ class SquadManager {
         }
 
         try {
-            const snapshot = await firebaseFirestore
-                .collection('users')
-                .doc(this.currentUserId)
-                .collection('savedSquads')
-                .orderBy('createdAt', 'desc')
-                .get();
+            const snapshot = await firebaseDB.ref(`users/${this.currentUserId}/savedSquads`).once('value');
+            const data = snapshot.val();
 
-            this.squads = snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            }));
+            if (data) {
+                // Convert Object to Array
+                this.squads = Object.values(data).sort((a, b) => b.createdAt - a.createdAt);
+            } else {
+                this.squads = [];
+            }
 
             console.log(`✅ Loaded ${this.squads.length} squads`);
             return this.squads;
         } catch (error) {
             console.error('❌ Error loading squads:', error);
+
             this.squads = [];
             return [];
         }
@@ -110,15 +106,9 @@ class SquadManager {
         }
 
         try {
-            const doc = await firebaseFirestore
-                .collection('users')
-                .doc(this.currentUserId)
-                .collection('savedSquads')
-                .doc(squadId)
-                .get();
-
-            if (doc.exists) {
-                return { id: doc.id, ...doc.data() };
+            const snapshot = await firebaseDB.ref(`users/${this.currentUserId}/savedSquads/${squadId}`).once('value');
+            if (snapshot.exists()) {
+                return snapshot.val();
             } else {
                 throw new Error('Squad not found');
             }
@@ -135,12 +125,7 @@ class SquadManager {
         }
 
         try {
-            await firebaseFirestore
-                .collection('users')
-                .doc(this.currentUserId)
-                .collection('savedSquads')
-                .doc(squadId)
-                .delete();
+            await firebaseDB.ref(`users/${this.currentUserId}/savedSquads/${squadId}`).remove();
 
             // Remove from local array
             this.squads = this.squads.filter(s => s.id !== squadId);
@@ -160,15 +145,8 @@ class SquadManager {
         }
 
         try {
-            await firebaseFirestore
-                .collection('users')
-                .doc(this.currentUserId)
-                .collection('savedSquads')
-                .doc(squadId)
-                .update({
-                    ...updates,
-                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
+            updates.updatedAt = firebase.database.ServerValue.TIMESTAMP;
+            await firebaseDB.ref(`users/${this.currentUserId}/savedSquads/${squadId}`).update(updates);
 
             console.log('✅ Squad updated');
             return true;

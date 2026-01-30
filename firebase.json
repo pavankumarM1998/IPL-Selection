@@ -13,7 +13,13 @@
     "ignore": [
       "firebase.json",
       "**/.*",
-      "**/node_modules/**"
+      "**/node_modules/**",
+      "**/*.py",
+      "**/*.md",
+      "service-account.json",
+      ".venv/**",
+      "scraped_squads.json",
+      "users.json"
     ],
     "rewrites": [
       {

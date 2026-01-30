@@ -86,8 +86,17 @@ class SavedSquadsScreen {
         const card = document.createElement('div');
         card.className = 'squad-card';
 
-        const createdDate = squad.createdAt ? new Date(squad.createdAt.toDate()).toLocaleDateString() : 'Unknown';
-        const playersCount = squad.players.filter(p => p !== null).length;
+        let createdDate = 'Unknown';
+        if (squad.createdAt) {
+            // Handle Firestore Timestamp (has .toDate) vs RTDB Timestamp (number)
+            if (typeof squad.createdAt.toDate === 'function') {
+                createdDate = new Date(squad.createdAt.toDate()).toLocaleDateString();
+            } else {
+                createdDate = new Date(squad.createdAt).toLocaleDateString();
+            }
+        }
+
+        const playersCount = squad.players ? squad.players.filter(p => p !== null).length : 0;
 
         card.innerHTML = `
             <div class="squad-card-header">

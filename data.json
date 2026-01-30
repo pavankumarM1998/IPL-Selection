@@ -1,0 +1,1570 @@
+{
+  "teams": [
+    {
+      "id": "csk",
+      "name": "Chennai Super Kings",
+      "shortName": "CSK",
+      "color": "#FDB913",
+      "logo": "https://documents.iplt20.com/ipl/CSK/Logos/Logooutline/CSKoutline.png",
+      "players": [
+        {
+          "id": "csk-1",
+          "name": "MS Dhoni",
+          "role": "wicketkeeper",
+          "nationality": "IND"
+        },
+        {
+          "id": "csk-2",
+          "name": "Ruturaj Gaikwad",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "csk-3",
+          "name": "Sanju Samson",
+          "role": "wicketkeeper",
+          "nationality": "IND"
+        },
+        {
+          "id": "csk-4",
+          "name": "Ayush Mhatre",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "csk-5",
+          "name": "Dewald Brewis",
+          "role": "batsman",
+          "nationality": "RSA"
+        },
+        {
+          "id": "csk-6",
+          "name": "Shivam Dube",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "csk-7",
+          "name": "Urvil Patel",
+          "role": "wicketkeeper",
+          "nationality": "IND"
+        },
+        {
+          "id": "csk-8",
+          "name": "Sarfaraz Khan",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "csk-9",
+          "name": "Prashant Veer",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "csk-10",
+          "name": "Kartik Sharma",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "csk-11",
+          "name": "Aman Khan",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "csk-12",
+          "name": "Noor Ahmad",
+          "role": "bowler",
+          "nationality": "AFG"
+        },
+        {
+          "id": "csk-13",
+          "name": "Nathan Ellis",
+          "role": "bowler",
+          "nationality": "AUS"
+        },
+        {
+          "id": "csk-14",
+          "name": "Shreyas Gopal",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "csk-15",
+          "name": "Khaleel Ahmed",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "csk-16",
+          "name": "Ramakrishna Ghosh",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "csk-17",
+          "name": "Mukesh Choudhary",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "csk-18",
+          "name": "Jamie Overton",
+          "role": "all-rounder",
+          "nationality": "ENG"
+        },
+        {
+          "id": "csk-19",
+          "name": "Gurjapneet Singh",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "csk-20",
+          "name": "Anshul Kamboj",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "csk-21",
+          "name": "Rahul Chahar",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "csk-22",
+          "name": "Akeal Hosein",
+          "role": "all-rounder",
+          "nationality": "WI"
+        },
+        {
+          "id": "csk-23",
+          "name": "Matt Henry",
+          "role": "bowler",
+          "nationality": "NZ"
+        },
+        {
+          "id": "csk-24",
+          "name": "Matthew Short",
+          "role": "batsman",
+          "nationality": "AUS"
+        },
+        {
+          "id": "csk-25",
+          "name": "Zak Foulkes",
+          "role": "all-rounder",
+          "nationality": "NZ"
+        }
+      ]
+    },
+    {
+      "id": "dc",
+      "name": "Delhi Capitals",
+      "shortName": "DC",
+      "color": "#004C93",
+      "logo": "https://documents.iplt20.com/ipl/DC/Logos/LogoOutline/DCoutline.png",
+      "players": [
+        {
+          "id": "dc-1",
+          "name": "KL Rahul",
+          "role": "wicketkeeper",
+          "nationality": "IND"
+        },
+        {
+          "id": "dc-2",
+          "name": "Axar Patel",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "dc-3",
+          "name": "Kuldeep Yadav",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "dc-4",
+          "name": "Tristan Stubbs",
+          "role": "batsman",
+          "nationality": "RSA"
+        },
+        {
+          "id": "dc-5",
+          "name": "Abishek Porel",
+          "role": "wicketkeeper",
+          "nationality": "IND"
+        },
+        {
+          "id": "dc-6",
+          "name": "Mitchell Starc",
+          "role": "bowler",
+          "nationality": "AUS"
+        },
+        {
+          "id": "dc-7",
+          "name": "Karun Nair",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "dc-8",
+          "name": "Sameer Rizvi",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "dc-9",
+          "name": "Ashutosh Sharma",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "dc-10",
+          "name": "Ajay Mandal",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "dc-11",
+          "name": "Madhav Tiwari",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "dc-12",
+          "name": "Tripurana Vijay",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "dc-13",
+          "name": "Vipraj Nigam",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "dc-14",
+          "name": "T Natarajan",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "dc-15",
+          "name": "Mukesh Kumar",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "dc-16",
+          "name": "Dushmantha Chameera",
+          "role": "bowler",
+          "nationality": "SL"
+        },
+        {
+          "id": "dc-17",
+          "name": "Nitish Rana",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "dc-18",
+          "name": "Auqib Nabi Dar",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "dc-19",
+          "name": "Pathum Nissanka",
+          "role": "batsman",
+          "nationality": "SL"
+        },
+        {
+          "id": "dc-20",
+          "name": "David Miller",
+          "role": "batsman",
+          "nationality": "RSA"
+        },
+        {
+          "id": "dc-21",
+          "name": "Ben Duckett",
+          "role": "batsman",
+          "nationality": "ENG"
+        },
+        {
+          "id": "dc-22",
+          "name": "Lungi Ngidi",
+          "role": "bowler",
+          "nationality": "RSA"
+        },
+        {
+          "id": "dc-23",
+          "name": "Kyle Jamieson",
+          "role": "all-rounder",
+          "nationality": "NZ"
+        },
+        {
+          "id": "dc-24",
+          "name": "Prithvi Shaw",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "dc-25",
+          "name": "Sahil Parikh",
+          "role": "bowler",
+          "nationality": "IND"
+        }
+      ]
+    },
+    {
+      "id": "gt",
+      "name": "Gujarat Titans",
+      "shortName": "GT",
+      "color": "#1C2F4C",
+      "logo": "https://documents.iplt20.com/ipl/GT/Logos/Logooutline/GToutline.png",
+      "players": [
+        {
+          "id": "gt-1",
+          "name": "Shubman Gill",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "gt-2",
+          "name": "Rashid Khan",
+          "role": "bowler",
+          "nationality": "AFG"
+        },
+        {
+          "id": "gt-3",
+          "name": "Sai Sudharsan",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "gt-4",
+          "name": "Kumar Kushagra",
+          "role": "wicketkeeper",
+          "nationality": "IND"
+        },
+        {
+          "id": "gt-5",
+          "name": "Anuj Rawat",
+          "role": "wicketkeeper",
+          "nationality": "IND"
+        },
+        {
+          "id": "gt-6",
+          "name": "Jos Buttler",
+          "role": "wicketkeeper",
+          "nationality": "ENG"
+        },
+        {
+          "id": "gt-7",
+          "name": "Nishant Sindhu",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "gt-8",
+          "name": "Washington Sundar",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "gt-9",
+          "name": "Arshad Khan",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "gt-10",
+          "name": "Shahrukh Khan",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "gt-11",
+          "name": "Rahul Tewatia",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "gt-12",
+          "name": "Glenn Phillips",
+          "role": "all-rounder",
+          "nationality": "NZ"
+        },
+        {
+          "id": "gt-13",
+          "name": "Kagiso Rabada",
+          "role": "bowler",
+          "nationality": "RSA"
+        },
+        {
+          "id": "gt-14",
+          "name": "Mohammed Siraj",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "gt-15",
+          "name": "Prasidh Krishna",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "gt-16",
+          "name": "Ishant Sharma",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "gt-17",
+          "name": "Gurnoor Singh Brar",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "gt-18",
+          "name": "Manav Suthar",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "gt-19",
+          "name": "Sai Kishore",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "gt-20",
+          "name": "Jayant Yadav",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "gt-21",
+          "name": "Jason Holder",
+          "role": "all-rounder",
+          "nationality": "WI"
+        },
+        {
+          "id": "gt-22",
+          "name": "Tom Banton",
+          "role": "wicketkeeper",
+          "nationality": "ENG"
+        },
+        {
+          "id": "gt-23",
+          "name": "Ashok Sharma",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "gt-24",
+          "name": "Luke Wood",
+          "role": "bowler",
+          "nationality": "ENG"
+        },
+        {
+          "id": "gt-25",
+          "name": "Prithvi Raj",
+          "role": "batsman",
+          "nationality": "IND"
+        }
+      ]
+    },
+    {
+      "id": "kkr",
+      "name": "Kolkata Knight Riders",
+      "shortName": "KKR",
+      "color": "#3A225D",
+      "logo": "https://documents.iplt20.com/ipl/KKR/Logos/Logooutline/KKRoutline.png",
+      "players": [
+        {
+          "id": "kkr-1",
+          "name": "Rinku Singh",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "kkr-2",
+          "name": "Varun Chakravarthy",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "kkr-3",
+          "name": "Sunil Narine",
+          "role": "all-rounder",
+          "nationality": "WI"
+        },
+        {
+          "id": "kkr-5",
+          "name": "Harshit Rana",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "kkr-6",
+          "name": "Ramandeep Singh",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "kkr-7",
+          "name": "Angkrish Raghuvanshi",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "kkr-8",
+          "name": "Rovman Powell",
+          "role": "all-rounder",
+          "nationality": "WI"
+        },
+        {
+          "id": "kkr-9",
+          "name": "Manish Pandey",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "kkr-10",
+          "name": "Ajinkya Rahane",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "kkr-11",
+          "name": "Rahul Tripathi",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "kkr-12",
+          "name": "Rachin Ravindra",
+          "role": "all-rounder",
+          "nationality": "NZ"
+        },
+        {
+          "id": "kkr-13",
+          "name": "Finn Allen",
+          "role": "wicketkeeper",
+          "nationality": "NZ"
+        },
+        {
+          "id": "kkr-14",
+          "name": "Tim Seifert",
+          "role": "wicketkeeper",
+          "nationality": "NZ"
+        },
+        {
+          "id": "kkr-15",
+          "name": "Anukul Roy",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "kkr-16",
+          "name": "Umran Malik",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "kkr-17",
+          "name": "Vaibhav Arora",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "kkr-18",
+          "name": "Akash Deep",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "kkr-20",
+          "name": "Prashant Solanki",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "kkr-21",
+          "name": "Tejasvi Singh",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "kkr-22",
+          "name": "Daksh Kamra",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "kkr-23",
+          "name": "Sarthak Ranjan",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "kkr-24",
+          "name": "Cameron Green",
+          "role": "all-rounder",
+          "nationality": "AUS"
+        },
+        {
+          "id": "kkr-25",
+          "name": "Matheesha Pathirana",
+          "role": "bowler",
+          "nationality": "SL"
+        },
+        {
+          "id": "kkr-26",
+          "name": "Kartik Tyagi",
+          "role": "bowler",
+          "nationality": "IND"
+        }
+      ]
+    },
+    {
+      "id": "lsg",
+      "name": "Lucknow Super Giants",
+      "shortName": "LSG",
+      "color": "#00A1E4",
+      "logo": "https://documents.iplt20.com/ipl/LSG/Logos/Logooutline/LSGoutline.png",
+      "players": [
+        {
+          "id": "lsg-1",
+          "name": "Nicholas Pooran",
+          "role": "wicketkeeper",
+          "nationality": "WI"
+        },
+        {
+          "id": "lsg-2",
+          "name": "Mayank Yadav",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "lsg-3",
+          "name": "Mohsin Khan",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "lsg-4",
+          "name": "Ravi Bishnoi",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "lsg-5",
+          "name": "Ayush Badoni",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "lsg-6",
+          "name": "Aiden Markram",
+          "role": "batsman",
+          "nationality": "RSA"
+        },
+        {
+          "id": "lsg-7",
+          "name": "Matthew Breetzke",
+          "role": "batsman",
+          "nationality": "RSA"
+        },
+        {
+          "id": "lsg-8",
+          "name": "Akshat Raghuvanshi",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "lsg-9",
+          "name": "Himmat Singh",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "lsg-10",
+          "name": "Aryan Juyal",
+          "role": "wicketkeeper",
+          "nationality": "IND"
+        },
+        {
+          "id": "lsg-11",
+          "name": "David Miller",
+          "role": "batsman",
+          "nationality": "RSA"
+        },
+        {
+          "id": "lsg-12",
+          "name": "Shamar Joseph",
+          "role": "bowler",
+          "nationality": "WI"
+        },
+        {
+          "id": "lsg-13",
+          "name": "Yash Thakur",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "lsg-14",
+          "name": "M Siddharth",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "lsg-15",
+          "name": "Abdul Samad",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "lsg-16",
+          "name": "Akash Singh",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "lsg-17",
+          "name": "Digvesh Singh",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "lsg-18",
+          "name": "Arshin Kulkarni",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "lsg-19",
+          "name": "Arshad Khan",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "lsg-20",
+          "name": "Mitchell Marsh",
+          "role": "all-rounder",
+          "nationality": "AUS"
+        },
+        {
+          "id": "lsg-21",
+          "name": "Avesh Khan",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "lsg-22",
+          "name": "Gerald Coetzee",
+          "role": "bowler",
+          "nationality": "RSA"
+        },
+        {
+          "id": "lsg-23",
+          "name": "Prince Yadav",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "lsg-24",
+          "name": "Tejasvi Dhyani",
+          "role": "batsman",
+          "nationality": "IND"
+        }
+      ]
+    },
+    {
+      "id": "mi",
+      "name": "Mumbai Indians",
+      "shortName": "MI",
+      "color": "#004BA0",
+      "logo": "https://documents.iplt20.com/ipl/MI/Logos/Logooutline/MIoutline.png",
+      "players": [
+        {
+          "id": "mi-1",
+          "name": "Jasprit Bumrah",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "mi-2",
+          "name": "Suryakumar Yadav",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "mi-3",
+          "name": "Hardik Pandya",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "mi-4",
+          "name": "Rohit Sharma",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "mi-5",
+          "name": "Tilak Varma",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "mi-6",
+          "name": "Trent Boult",
+          "role": "bowler",
+          "nationality": "NZ"
+        },
+        {
+          "id": "mi-7",
+          "name": "Will Jacks",
+          "role": "all-rounder",
+          "nationality": "ENG"
+        },
+        {
+          "id": "mi-8",
+          "name": "Naman Dhir",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "mi-9",
+          "name": "Robin Minz",
+          "role": "wicketkeeper",
+          "nationality": "IND"
+        },
+        {
+          "id": "mi-10",
+          "name": "Ryan Rickleton",
+          "role": "wicketkeeper",
+          "nationality": "RSA"
+        },
+        {
+          "id": "mi-11",
+          "name": "Mitchell Santner",
+          "role": "all-rounder",
+          "nationality": "NZ"
+        },
+        {
+          "id": "mi-12",
+          "name": "Corbin Bosch",
+          "role": "all-rounder",
+          "nationality": "RSA"
+        },
+        {
+          "id": "mi-13",
+          "name": "Allah Ghafanzar",
+          "role": "bowler",
+          "nationality": "AFG"
+        },
+        {
+          "id": "mi-14",
+          "name": "Ashwani Kumar",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "mi-15",
+          "name": "Deepak Chahar",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "mi-16",
+          "name": "Raj Angad Bawa",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "mi-17",
+          "name": "Raghu Sharma",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "mi-18",
+          "name": "Sherfane Rutherford",
+          "role": "all-rounder",
+          "nationality": "WI"
+        },
+        {
+          "id": "mi-19",
+          "name": "Mayank Markande",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "mi-20",
+          "name": "Shardul Thakur",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "mi-21",
+          "name": "Quinton de Kock",
+          "role": "wicketkeeper",
+          "nationality": "RSA"
+        },
+        {
+          "id": "mi-22",
+          "name": "Atharva Ankolekar",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "mi-23",
+          "name": "Mayank Rawat",
+          "role": "wicketkeeper",
+          "nationality": "IND"
+        },
+        {
+          "id": "mi-24",
+          "name": "Mohammad Izhar",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "mi-25",
+          "name": "Danish Melawar",
+          "role": "batsman",
+          "nationality": "IND"
+        }
+      ]
+    },
+    {
+      "id": "pbks",
+      "name": "Punjab Kings",
+      "shortName": "PBKS",
+      "color": "#ED1B24",
+      "logo": "https://documents.iplt20.com/ipl/PBKS/Logos/Logooutline/PBKSoutline.png",
+      "players": [
+        {
+          "id": "pbks-1",
+          "name": "Shreyas Iyer",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "pbks-2",
+          "name": "Yuzvendra Chahal",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "pbks-3",
+          "name": "Arshdeep Singh",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "pbks-4",
+          "name": "Marcus Stoinis",
+          "role": "all-rounder",
+          "nationality": "AUS"
+        },
+        {
+          "id": "pbks-5",
+          "name": "Prabhsimran Singh",
+          "role": "wicketkeeper",
+          "nationality": "IND"
+        },
+        {
+          "id": "pbks-6",
+          "name": "Priyansh Arya",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "pbks-7",
+          "name": "Nehal Wadhera",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "pbks-8",
+          "name": "Harpreet Brar",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "pbks-9",
+          "name": "Musheer Khan",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "pbks-10",
+          "name": "Shashank Singh",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "pbks-11",
+          "name": "Marco Jansen",
+          "role": "all-rounder",
+          "nationality": "RSA"
+        },
+        {
+          "id": "pbks-12",
+          "name": "Lockie Ferguson",
+          "role": "bowler",
+          "nationality": "NZ"
+        },
+        {
+          "id": "pbks-13",
+          "name": "Xavier Bartlett",
+          "role": "bowler",
+          "nationality": "AUS"
+        },
+        {
+          "id": "pbks-14",
+          "name": "Azmatullah Omarzai",
+          "role": "all-rounder",
+          "nationality": "AFG"
+        },
+        {
+          "id": "pbks-15",
+          "name": "Harnoor Singh Pannu",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "pbks-16",
+          "name": "Mitch Owen",
+          "role": "batsman",
+          "nationality": "AUS"
+        },
+        {
+          "id": "pbks-17",
+          "name": "Suryansh Shedge",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "pbks-18",
+          "name": "Vishnu Vinod",
+          "role": "wicketkeeper",
+          "nationality": "IND"
+        },
+        {
+          "id": "pbks-19",
+          "name": "Vyshak Vijaykumar",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "pbks-20",
+          "name": "Yash Thakur",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "pbks-21",
+          "name": "Pyla Avinash",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "pbks-22",
+          "name": "Ben Dwarshuis",
+          "role": "bowler",
+          "nationality": "AUS"
+        },
+        {
+          "id": "pbks-23",
+          "name": "Cooper Connolly",
+          "role": "all-rounder",
+          "nationality": "AUS"
+        },
+        {
+          "id": "pbks-24",
+          "name": "Vishal Nishad",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "pbks-25",
+          "name": "Pravin Dubey",
+          "role": "bowler",
+          "nationality": "IND"
+        }
+      ]
+    },
+    {
+      "id": "rr",
+      "name": "Rajasthan Royals",
+      "shortName": "RR",
+      "color": "#EA1A85",
+      "logo": "https://documents.iplt20.com/ipl/RR/Logos/Logooutline/RRoutline.png",
+      "players": [
+        {
+          "id": "rr-1",
+          "name": "Yashasvi Jaiswal",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "rr-2",
+          "name": "Riyan Parag",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "rr-3",
+          "name": "Dhruv Jurel",
+          "role": "wicketkeeper",
+          "nationality": "IND"
+        },
+        {
+          "id": "rr-4",
+          "name": "Jofra Archer",
+          "role": "bowler",
+          "nationality": "ENG"
+        },
+        {
+          "id": "rr-5",
+          "name": "Shimron Hetmyer",
+          "role": "batsman",
+          "nationality": "WI"
+        },
+        {
+          "id": "rr-6",
+          "name": "Shubham Dubey",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "rr-7",
+          "name": "Vaibhav Suryavanshi",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "rr-8",
+          "name": "Lhuan-Dre Pretorius",
+          "role": "all-rounder",
+          "nationality": "RSA"
+        },
+        {
+          "id": "rr-9",
+          "name": "Yudhvir Singh Charak",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "rr-10",
+          "name": "Tushar Deshpande",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "rr-11",
+          "name": "Kwena Maphaka",
+          "role": "bowler",
+          "nationality": "RSA"
+        },
+        {
+          "id": "rr-12",
+          "name": "Nandre Burger",
+          "role": "bowler",
+          "nationality": "RSA"
+        },
+        {
+          "id": "rr-13",
+          "name": "Ravindra Jadeja",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "rr-14",
+          "name": "Sam Curran",
+          "role": "all-rounder",
+          "nationality": "ENG"
+        },
+        {
+          "id": "rr-15",
+          "name": "Maheesh Theekshana",
+          "role": "bowler",
+          "nationality": "SL"
+        },
+        {
+          "id": "rr-16",
+          "name": "Sandeep Sharma",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "rr-17",
+          "name": "Adam Zampa",
+          "role": "bowler",
+          "nationality": "AUS"
+        },
+        {
+          "id": "rr-18",
+          "name": "Fazalhaq Farooqi",
+          "role": "bowler",
+          "nationality": "AFG"
+        },
+        {
+          "id": "rr-19",
+          "name": "Wanindu Hasaranga",
+          "role": "all-rounder",
+          "nationality": "SL"
+        },
+        {
+          "id": "rr-20",
+          "name": "Nitish Rana",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "rr-21",
+          "name": "Kumar Kartikeya",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "rr-22",
+          "name": "Akash Vashisht",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "rr-23",
+          "name": "Abhishek Sharma",
+          "role": "all-rounder",
+          "nationality": "IND"
+        }
+      ]
+    },
+    {
+      "id": "rcb",
+      "name": "Royal Challengers Bengaluru",
+      "shortName": "RCB",
+      "color": "#EC1C24",
+      "logo": "https://documents.iplt20.com/ipl/RCB/Logos/Logooutline/RCBoutline.png",
+      "players": [
+        {
+          "id": "rcb-1",
+          "name": "Virat Kohli",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "rcb-2",
+          "name": "Rajat Patidar",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "rcb-3",
+          "name": "Devdutt Padikkal",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "rcb-4",
+          "name": "Phil Salt",
+          "role": "wicketkeeper",
+          "nationality": "ENG"
+        },
+        {
+          "id": "rcb-5",
+          "name": "Jitesh Sharma",
+          "role": "wicketkeeper",
+          "nationality": "IND"
+        },
+        {
+          "id": "rcb-6",
+          "name": "Tim David",
+          "role": "batsman",
+          "nationality": "AUS"
+        },
+        {
+          "id": "rcb-7",
+          "name": "Krunal Pandya",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "rcb-8",
+          "name": "Romario Shepherd",
+          "role": "all-rounder",
+          "nationality": "WI"
+        },
+        {
+          "id": "rcb-9",
+          "name": "Bhuvneshwar Kumar",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "rcb-10",
+          "name": "Yash Dayal",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "rcb-11",
+          "name": "Josh Hazlewood",
+          "role": "bowler",
+          "nationality": "AUS"
+        },
+        {
+          "id": "rcb-12",
+          "name": "Suyash Sharma",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "rcb-13",
+          "name": "Abhinandan Singh",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "rcb-14",
+          "name": "Jacob Bethell",
+          "role": "all-rounder",
+          "nationality": "ENG"
+        },
+        {
+          "id": "rcb-15",
+          "name": "Nuwan Thushara",
+          "role": "bowler",
+          "nationality": "SL"
+        },
+        {
+          "id": "rcb-16",
+          "name": "Rasikh Dar",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "rcb-17",
+          "name": "Swapnil Singh",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "rcb-18",
+          "name": "Venkatesh Iyer",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "rcb-19",
+          "name": "Mangesh Yadav",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "rcb-20",
+          "name": "Jacob Duffy",
+          "role": "bowler",
+          "nationality": "NZ"
+        },
+        {
+          "id": "rcb-21",
+          "name": "Jordan Cox",
+          "role": "wicketkeeper",
+          "nationality": "ENG"
+        },
+        {
+          "id": "rcb-22",
+          "name": "Satvik Deswal",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "rcb-23",
+          "name": "Vicky Ostwal",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "rcb-24",
+          "name": "Vihaan Malhotra",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "rcb-25",
+          "name": "Kanishk Chouhan",
+          "role": "batsman",
+          "nationality": "IND"
+        }
+      ]
+    },
+    {
+      "id": "srh",
+      "name": "Sunrisers Hyderabad",
+      "shortName": "SRH",
+      "color": "#FF822A",
+      "logo": "https://documents.iplt20.com/ipl/SRH/Logos/Logooutline/SRHoutline.png",
+      "players": [
+        {
+          "id": "srh-1",
+          "name": "Pat Cummins",
+          "role": "bowler",
+          "nationality": "AUS"
+        },
+        {
+          "id": "srh-2",
+          "name": "Abhishek Sharma",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "srh-3",
+          "name": "Travis Head",
+          "role": "batsman",
+          "nationality": "AUS"
+        },
+        {
+          "id": "srh-4",
+          "name": "Heinrich Klaasen",
+          "role": "wicketkeeper",
+          "nationality": "RSA"
+        },
+        {
+          "id": "srh-5",
+          "name": "Nitish Kumar Reddy",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "srh-6",
+          "name": "Ishan Kishan",
+          "role": "wicketkeeper",
+          "nationality": "IND"
+        },
+        {
+          "id": "srh-7",
+          "name": "Brydon Carse",
+          "role": "all-rounder",
+          "nationality": "ENG"
+        },
+        {
+          "id": "srh-8",
+          "name": "Aniket Verma",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "srh-9",
+          "name": "Kamindu Mendis",
+          "role": "all-rounder",
+          "nationality": "SL"
+        },
+        {
+          "id": "srh-10",
+          "name": "Smaran Ravichandran",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "srh-11",
+          "name": "Harshal Patel",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "srh-12",
+          "name": "Jaydev Unadkat",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "srh-13",
+          "name": "Shivam Mavi",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "srh-14",
+          "name": "Eshan Malinga",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "srh-15",
+          "name": "Zeeshan Ansari",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "srh-16",
+          "name": "Harsh Dubey",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "srh-17",
+          "name": "Amit Kumar",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "srh-18",
+          "name": "Krains Fuletra",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "srh-19",
+          "name": "Liam Livingstone",
+          "role": "all-rounder",
+          "nationality": "ENG"
+        },
+        {
+          "id": "srh-20",
+          "name": "Jack Edwards",
+          "role": "batsman",
+          "nationality": "AUS"
+        },
+        {
+          "id": "srh-21",
+          "name": "Salil Arora",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "srh-22",
+          "name": "Shivang Kumar",
+          "role": "bowler",
+          "nationality": "IND"
+        },
+        {
+          "id": "srh-23",
+          "name": "Praful Hinge",
+          "role": "all-rounder",
+          "nationality": "IND"
+        },
+        {
+          "id": "srh-24",
+          "name": "Onkar Tarmale",
+          "role": "batsman",
+          "nationality": "IND"
+        },
+        {
+          "id": "srh-25",
+          "name": "Sakib Hussain",
+          "role": "bowler",
+          "nationality": "IND"
+        }
+      ]
+    }
+  ]
+}

@@ -32,6 +32,10 @@ class TeamSelector {
         if (matchesScreen) { matchesScreen.classList.add('hidden'); matchesScreen.style.display = 'none'; }
         if (savedSquadsScreen) { savedSquadsScreen.classList.add('hidden'); savedSquadsScreen.style.display = 'none'; }
 
+        // Ensure Match Builder is hidden
+        const matchBuilderScreen = document.getElementById('matchBuilderScreen');
+        if (matchBuilderScreen) { matchBuilderScreen.classList.add('hidden'); matchBuilderScreen.style.display = 'none'; }
+
         document.getElementById('headerSubtitle').textContent = 'Build Your Dream Team';
 
         // Restore Main Navigation
@@ -130,8 +134,19 @@ class TeamSelector {
 
     // Show team builder screen
     showTeamBuilder() {
+        // Hide all other screens
         document.getElementById('homeScreen').classList.add('hidden');
-        document.getElementById('teamBuilderScreen').classList.remove('hidden');
+        document.getElementById('matchesScreen').classList.add('hidden');
+        document.getElementById('savedSquadsScreen').classList.add('hidden');
+        document.getElementById('matchBuilderScreen').classList.add('hidden'); // Safety
+
+        // Show Team Builder
+        const teamBuilderScreen = document.getElementById('teamBuilderScreen');
+        teamBuilderScreen.classList.remove('hidden');
+        teamBuilderScreen.style.display = 'flex'; // Force flex for layout
+
+        if (document.getElementById('homeScreen')) document.getElementById('homeScreen').style.display = 'none';
+
         document.getElementById('headerSubtitle').textContent = this.selectedTeam.name;
         document.getElementById('teamNameTitle').textContent = `${this.selectedTeam.shortName} Players`;
 
@@ -163,15 +178,74 @@ class TeamSelector {
     }
 
     setupActionListeners() {
+        // Clear listeners first to avoid duplicates if this is called multiple times
+        // actually we will use onclick to be safe and overwrite
+
         const backBtn = document.getElementById('backBtn');
         const saveBtn = document.getElementById('saveBtn');
         const exportBtn = document.getElementById('exportBtn');
         const clearAllBtn = document.getElementById('clearAllBtn');
 
-        if (backBtn) backBtn.addEventListener('click', () => this.showHomeScreen());
-        if (saveBtn) saveBtn.addEventListener('click', () => this.saveSquad());
-        if (exportBtn) exportBtn.addEventListener('click', () => this.exportTeam());
-        if (clearAllBtn) clearAllBtn.addEventListener('click', () => this.clearAll());
+        if (backBtn) backBtn.onclick = () => this.showHomeScreen();
+
+        if (saveBtn) {
+            saveBtn.onclick = async () => {
+                // Validation
+                const playingXI = this.selectedPlayers.slice(0, 11).filter(p => p !== null);
+                if (playingXI.length < 11) {
+                    alert('⚠️ SQUAD INCOMPLETE\n\nYou must select exactly 11 players.\n\nCurrent: ' + playingXI.length + '/11');
+                    return;
+                }
+
+                // Auth Check
+                if (!firebase.auth().currentUser) {
+                    alert('Please Sign In to save your squad.');
+                    const authModal = document.getElementById('authModal');
+                    if (authModal) authModal.classList.remove('hidden');
+                    return;
+                }
+
+                const squadName = prompt('Enter a name for this squad:', `${this.selectedTeam.shortName} Playing XI`);
+                if (!squadName) return;
+
+                try {
+                    const squadData = {
+                        name: squadName,
+                        teamId: this.selectedTeam.id,
+                        teamName: this.selectedTeam.name,
+                        teamColor: this.selectedTeam.color,
+                        teamLogo: this.selectedTeam.logo,
+                        players: playingXI // USE VALIDATED ARRAY (exactly 11)
+                    };
+
+                    await window.squadManager.saveSquad(squadData);
+
+                    // Show success and redirect
+                    this.showToast(`✅ Squad "${squadName}" saved!`, 'success');
+
+                    // Switch to Saved Squads screen
+                    if (window.savedSquadsScreen) {
+                        window.savedSquadsScreen.show();
+
+                        // Update Nav UI
+                        const navTeamsBtn = document.getElementById('navTeamsBtn');
+                        const navMatchesBtn = document.getElementById('navMatchesBtn');
+                        const navSquadsBtn = document.getElementById('navSquadsBtn');
+
+                        if (navTeamsBtn) navTeamsBtn.classList.remove('active');
+                        if (navMatchesBtn) navMatchesBtn.classList.remove('active');
+                        if (navSquadsBtn) navSquadsBtn.classList.add('active');
+                    }
+                } catch (error) {
+                    console.error('Error saving squad:', error);
+                    alert('❌ SAVE FAILED: ' + error.message);
+                }
+            };
+        }
+
+        if (exportBtn) exportBtn.onclick = () => this.exportSquad();
+
+        if (clearAllBtn) clearAllBtn.onclick = () => this.clearAll();
     }
 
     // Render players list grouped by role
@@ -537,7 +611,7 @@ class TeamSelector {
 
             // If count is already 4 (or more) AND we are NOT replacing an existing foreign player, BLOCK IT.
             if (currentForeignCount >= 4 && !isReplacingForeign) {
-                this.showToast('❌ Limit Reached: Max 4 Overseas Players allowed!', 'error');
+                this.app.showToast('❌ Limit Reached: Max 4 Overseas Players allowed!', 'error');
                 return;
             }
         }
@@ -702,81 +776,92 @@ class TeamSelector {
         }
     }
 
-    // Save squad
-    async saveSquad() {
+    // Export team as Text (Notepad)
+    exportSquad() {
         const playingXI = this.selectedPlayers.slice(0, 11).filter(p => p !== null);
+
         if (playingXI.length === 0) {
-            alert('Please add at least one player before saving!');
+            alert('⚠️ CANNOT EXPORT\n\nPlease add at least one player to your squad before exporting.');
             return;
         }
-
-        // Check if user is authenticated
-        if (!window.authManager || !window.authManager.isAuthenticated()) {
-            window.authManager.showAuthModal();
-            this.showWarning('Please sign in to save squads');
-            return;
-        }
-
-        const squadName = prompt('Enter a name for this squad:', `${this.selectedTeam.shortName} Playing XI`);
-        if (!squadName) return;
 
         try {
-            const squadData = {
-                name: squadName,
-                teamId: this.selectedTeam.id,
-                teamName: this.selectedTeam.name,
-                teamColor: this.selectedTeam.color,
-                teamLogo: this.selectedTeam.logo,
-                players: this.selectedPlayers
+            const roleNames = {
+                'batsman': 'Batsman',
+                'bowler': 'Bowler',
+                'all-rounder': 'All-Rounder',
+                'wicketkeeper': 'Wicketkeeper'
             };
 
-            await window.squadManager.saveSquad(squadData);
-            this.showWarning(`✅ Squad "${squadName}" saved successfully!`);
+            let exportText = `🏏 ${this.selectedTeam.name} - Playing XI\n`;
+            exportText += `═══════════════════════════════\n\n`;
+            exportText += `PLAYING XI:\n`;
+
+            playingXI.forEach((player, index) => {
+                exportText += `${index + 1}. ${player.name} - ${roleNames[player.role] || player.role}\n`;
+            });
+
+            // Impact Player
+            const impactPlayer = this.selectedPlayers[11];
+            if (impactPlayer) {
+                exportText += `\nIMPACT PLAYER:\n`;
+                exportText += `${impactPlayer.name} - ${roleNames[impactPlayer.role] || impactPlayer.role}\n`;
+            }
+
+            exportText += `\n═══════════════════════════════\n`;
+            exportText += `Generate your own at Cricket Squad Builder\n`;
+
+            const blob = new Blob([exportText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${this.selectedTeam.shortName}_XI.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            alert('✅ EXPORT SUCCESS\n\nSquad list downloaded as Text file!');
+
         } catch (error) {
-            console.error('Error saving squad:', error);
-            this.showWarning('❌ Failed to save squad. Please try again.');
+            console.error("Export Failed:", error);
+            const roleNames = {
+                'batsman': 'Batsman',
+                'bowler': 'Bowler',
+                'all-rounder': 'All-Rounder',
+                'wicketkeeper': 'Wicketkeeper'
+            };
+
+            let exportText = `🏏 ${this.selectedTeam.name} - Playing XI\n`;
+            exportText += `═══════════════════════════════\n\n`;
+            exportText += `PLAYING XI:\n`;
+
+            playingXI.forEach((player, index) => {
+                exportText += `${index + 1}. ${player.name} - ${roleNames[player.role] || player.role}\n`;
+            });
+
+            // Impact Player
+            const impactPlayer = this.selectedPlayers[11];
+            if (impactPlayer) {
+                exportText += `\nIMPACT PLAYER:\n`;
+                exportText += `${impactPlayer.name} - ${roleNames[impactPlayer.role] || impactPlayer.role}\n`;
+            }
+
+            exportText += `\n═══════════════════════════════\n`;
+            exportText += `Generate your own at Cricket Squad Builder\n`;
+
+            const blob = new Blob([exportText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${this.selectedTeam.shortName}_XI.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            this.showToast('✅ Squad Text Exported!', 'success');
         }
-    }
-
-    // Export team as text
-    exportTeam() {
-        const playingXI = this.selectedPlayers.slice(0, 11).filter(p => p !== null);
-        const impactPlayer = this.selectedPlayers[11];
-
-        if (playingXI.length === 0) {
-            alert('Please add players to export!');
-            return;
-        }
-
-        let exportText = `🏏 ${this.selectedTeam.name} - Playing XI\n`;
-        exportText += `═══════════════════════════════\n\n`;
-        exportText += `PLAYING XI:\n`;
-
-        playingXI.forEach((player, index) => {
-            exportText += `${index + 1}. ${player.name} - ${roleNames[player.role]}\n`;
-        });
-
-        if (impactPlayer) {
-            exportText += `\nIMPACT PLAYER:\n`;
-            exportText += `${impactPlayer.name} - ${roleNames[impactPlayer.role]}\n`;
-        }
-
-        exportText += `\n═══════════════════════════════\n`;
-        exportText += `Total Players: ${playingXI.length}/11\n`;
-        exportText += `Generated: ${new Date().toLocaleString()}\n`;
-
-        // Download as text file
-        const blob = new Blob([exportText], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${this.selectedTeam.shortName}_Playing_XI.txt`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-
-        this.showWarning('✅ Team exported successfully!');
     }
 
     // Search players
@@ -846,16 +931,23 @@ class MatchSchedule {
         const homeScreen = document.getElementById('homeScreen');
         const teamBuilderScreen = document.getElementById('teamBuilderScreen');
         const matchesScreen = document.getElementById('matchesScreen');
+        const savedSquadsScreen = document.getElementById('savedSquadsScreen');
 
         if (homeScreen) { homeScreen.classList.add('hidden'); homeScreen.style.display = 'none'; }
         if (teamBuilderScreen) { teamBuilderScreen.classList.add('hidden'); teamBuilderScreen.style.display = 'none'; }
         if (matchesScreen) { matchesScreen.classList.remove('hidden'); matchesScreen.style.display = 'block'; }
+        if (savedSquadsScreen) { savedSquadsScreen.classList.add('hidden'); savedSquadsScreen.style.display = 'none'; }
 
         document.getElementById('headerSubtitle').textContent = 'IPL 2026 Schedule';
 
         // Update navigation buttons
-        document.getElementById('navTeamsBtn').classList.remove('active');
-        document.getElementById('navMatchesBtn').classList.add('active');
+        const navTeamsBtn = document.getElementById('navTeamsBtn');
+        const navMatchesBtn = document.getElementById('navMatchesBtn');
+        const navSquadsBtn = document.getElementById('navSquadsBtn');
+
+        if (navTeamsBtn) navTeamsBtn.classList.remove('active');
+        if (navMatchesBtn) navMatchesBtn.classList.add('active');
+        if (navSquadsBtn) navSquadsBtn.classList.remove('active');
 
         this.renderMatches();
     }
@@ -1035,6 +1127,13 @@ class MatchSchedule {
 }
 
 // App Manager
+// Global Error Handler
+window.onerror = function (msg, url, line, col, error) {
+    if (msg.includes('ResizeObserver') || msg.includes('Script error')) return;
+    alert(`⚠️ APP ERROR\n\n${msg}\nLine: ${line}`);
+    console.error("Global Error:", error);
+};
+
 class App {
     constructor() {
         this.app = this; // Self-reference for compatibility
@@ -1046,28 +1145,73 @@ class App {
     }
 
     initDirect() {
-        // 1. Load Data
-        if (typeof iplData !== 'undefined') {
-            this.data = iplData;
-        } else {
-            console.error("CRITICAL: iplData not found!");
-            // Fallback stub to ensure UI renders something
-            this.data = { teams: [] };
+        // Check if iplData is available globally
+        if (typeof iplData === 'undefined') {
+            console.error("❌ CRITICAL: iplData is undefined in initDirect!");
         }
 
-        if (typeof iplMatches !== 'undefined') {
-            this.matches = iplMatches;
-        } else {
-            this.matches = { matches: [] };
-        }
+        // 1. Load Data from Firebase with Fallback
+        this.loadData();
+    }
 
-        // 2. Start UI when DOM is ready
+    async loadData() {
+        console.log("🔄 Fetching data...");
+
+        // CHECK DOM
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => this.initializeApp());
-        } else {
-            // Use setTimeout to skip one tick and ensure DOM is fully parsed
-            setTimeout(() => this.initializeApp(), 0);
+            document.addEventListener('DOMContentLoaded', () => {
+                // Re-run fallback check here?
+            });
         }
+
+        const teamsGrid = document.getElementById('teamsGrid');
+
+        if (teamsGrid) teamsGrid.innerHTML = '<div class="loading-spinner"></div>';
+
+        // TIMEOUT FALLBACK: If Firebase takes > 2 seconds, force local data
+        const firebasePromise = (async () => {
+            try {
+                if (typeof firebaseDB === 'undefined') throw new Error("Firebase DB not init");
+                const teamsSnapshot = await firebaseDB.ref('teams').once('value');
+                const matchesSnapshot = await firebaseDB.ref('matches').once('value');
+                return { teams: teamsSnapshot.val(), matches: matchesSnapshot.val() };
+            } catch (e) {
+                return null;
+            }
+        })();
+
+        const fallbackPromise = new Promise(resolve => setTimeout(() => resolve(null), 2500));
+
+        try {
+            const result = await Promise.race([firebasePromise, fallbackPromise]);
+
+            if (result && result.teams) {
+                // Firebase Success
+                const teamsData = result.teams;
+                this.data.teams = Object.values(teamsData).map(team => {
+                    if (team.players && typeof team.players === 'object' && !Array.isArray(team.players)) {
+                        team.players = Object.values(team.players);
+                    } else if (!team.players) {
+                        team.players = [];
+                    }
+                    return team;
+                });
+                console.log(`✅ Loaded ${this.data.teams.length} teams from Firebase`);
+
+                if (result.matches) {
+                    this.matches.matches = Object.values(result.matches);
+                }
+            } else {
+                throw new Error("Firebase Timeout or Empty");
+            }
+        } catch (error) {
+            console.warn("⚠️ Using Local Data Fallback (Firebase slow/failed)", error);
+            if (typeof iplData !== 'undefined') this.data = iplData;
+            if (typeof iplMatches !== 'undefined') this.matches = iplMatches;
+        }
+
+        // 2. Start UI
+        this.initializeApp();
     }
 
     initializeApp() {

@@ -17,6 +17,14 @@
       ".indexOn": [
         "userId"
       ]
+    },
+    "teams": {
+      ".read": true,
+      ".write": false
+    },
+    "matches": {
+      ".read": true,
+      ".write": false
     }
   }
 }
