@@ -1,0 +1,48 @@
+name: IPL 2026 Daily Auto-Update
+
+on:
+  schedule:
+    # Run daily at 18:30 UTC (which is 00:00 IST / midnight IST)
+    - cron: '30 18 * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub UI
+
+permissions:
+  contents: write # Allows pushing the updated files back to the repository
+
+jobs:
+  update-schedule:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests beautifulsoup4 firebase-admin
+
+    - name: Run Daily Update Script
+      run: |
+        python daily_update.py
+
+    - name: Commit and Push Changes
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        
+        # Check if matches.js, matches.json, data.js, or data.json changed
+        git add matches.js matches.json data.js data.json daily_update.log
+        
+        if git diff --staged --quiet; then
+          echo "No changes to commit."
+        else
+          git commit -m "Auto-update match statuses, squads, and results [skip ci]"
+          git push origin main
+        fi

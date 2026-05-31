@@ -1,5 +1,5 @@
 // IPL 2026 Teams and Players Data - Auto-updated by daily_update.py
-// Last updated: 2026-05-03 09:50:06
+// Last updated: 2026-05-31 19:32:41
 const iplData = {
     teams: [
     {

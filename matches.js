@@ -1,5 +1,5 @@
 // IPL 2026 Match Schedule - Auto-updated by daily_update.py
-// Last updated: 2026-05-03 09:50:06
+// Last updated: 2026-05-31 19:32:41
 
 const iplMatches = {
     matches: [
@@ -576,8 +576,16 @@ const iplMatches = {
                 "venue": "Maharaja Yadavindra Singh Stadium, New Chandigarh",
                 "team1": "PBKS",
                 "team2": "RCB",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "PBKS",
+                        "team1Score": "158/7 (17.5)",
+                        "team2Score": "155/6 (20)",
+                        "summary": "PBKS won by 3 wickets",
+                        "potm": "Shreyas Iyer",
+                        "potmTeam": "PBKS"
+                }
         },
         {
                 "id": 46,
@@ -587,8 +595,16 @@ const iplMatches = {
                 "venue": "Sawai Mansingh Stadium, Jaipur",
                 "team1": "RR",
                 "team2": "GT",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "RR",
+                        "team1Score": "144/3 (17.5)",
+                        "team2Score": "142/5 (20)",
+                        "summary": "RR won by 7 wickets",
+                        "potm": "Wanindu Hasaranga",
+                        "potmTeam": "RR"
+                }
         },
         {
                 "id": 47,
@@ -598,8 +614,16 @@ const iplMatches = {
                 "venue": "Rajiv Gandhi International Cricket Stadium, Hyderabad",
                 "team1": "SRH",
                 "team2": "KKR",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "SRH",
+                        "team1Score": "210/7 (20)",
+                        "team2Score": "179/7 (20)",
+                        "summary": "SRH won by 31 runs",
+                        "potm": "Krains Fuletra",
+                        "potmTeam": "SRH"
+                }
         },
         {
                 "id": 48,
@@ -609,8 +633,16 @@ const iplMatches = {
                 "venue": "BRSABV Ekana Cricket Stadium, Lucknow",
                 "team1": "LSG",
                 "team2": "MI",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "MI",
+                        "team1Score": "191/5 (20)",
+                        "team2Score": "194/7 (18.3)",
+                        "summary": "MI won by 3 wickets",
+                        "potm": "Mayank Markande",
+                        "potmTeam": "MI"
+                }
         },
         {
                 "id": 49,
@@ -620,8 +652,16 @@ const iplMatches = {
                 "venue": "Arun Jaitley Stadium, Delhi",
                 "team1": "DC",
                 "team2": "PBKS",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "PBKS",
+                        "team1Score": "202/6 (20)",
+                        "team2Score": "213/5 (20)",
+                        "summary": "PBKS won by 11 runs",
+                        "potm": "Prabhsimran Singh",
+                        "potmTeam": "PBKS"
+                }
         },
         {
                 "id": 50,
@@ -631,8 +671,16 @@ const iplMatches = {
                 "venue": "Narendra Modi Stadium, Ahmedabad",
                 "team1": "GT",
                 "team2": "SRH",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "SRH",
+                        "team1Score": "194/7 (20)",
+                        "team2Score": "200/4 (17.4)",
+                        "summary": "SRH won by 6 wickets",
+                        "potm": "Heinrich Klaasen",
+                        "potmTeam": "SRH"
+                }
         },
         {
                 "id": 51,
@@ -642,8 +690,16 @@ const iplMatches = {
                 "venue": "Eden Gardens, Kolkata",
                 "team1": "KKR",
                 "team2": "RCB",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "KKR",
+                        "team1Score": "200/5 (20)",
+                        "team2Score": "155/10 (20)",
+                        "summary": "KKR won by 45 runs",
+                        "potm": "Tim Seifert",
+                        "potmTeam": "KKR"
+                }
         },
         {
                 "id": 52,
@@ -653,8 +709,16 @@ const iplMatches = {
                 "venue": "Sawai Mansingh Stadium, Jaipur",
                 "team1": "RR",
                 "team2": "DC",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "DC",
+                        "team1Score": "203/7 (20)",
+                        "team2Score": "210/3 (20)",
+                        "summary": "DC won by 7 runs",
+                        "potm": "Pathum Nissanka",
+                        "potmTeam": "DC"
+                }
         },
         {
                 "id": 53,
@@ -664,8 +728,16 @@ const iplMatches = {
                 "venue": "Wankhede Stadium, Mumbai",
                 "team1": "MI",
                 "team2": "GT",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "GT",
+                        "team1Score": "191/8 (20)",
+                        "team2Score": "220/3 (20)",
+                        "summary": "GT won by 29 runs",
+                        "potm": "Sai Sudharsan",
+                        "potmTeam": "GT"
+                }
         },
         {
                 "id": 54,
@@ -675,8 +747,16 @@ const iplMatches = {
                 "venue": "MA Chidambaram Stadium, Chennai",
                 "team1": "CSK",
                 "team2": "LSG",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "LSG",
+                        "team1Score": "150/7 (20)",
+                        "team2Score": "154/3 (19.3)",
+                        "summary": "LSG won by 7 wickets",
+                        "potm": "Avesh Khan",
+                        "potmTeam": "LSG"
+                }
         },
         {
                 "id": 55,
@@ -686,8 +766,16 @@ const iplMatches = {
                 "venue": "Shaheed Veer Narayan Singh International Stadium, Raipur",
                 "team1": "RCB",
                 "team2": "MI",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "RCB",
+                        "team1Score": "199/4 (20)",
+                        "team2Score": "184/9 (20)",
+                        "summary": "RCB won by 15 runs",
+                        "potm": "Jacob Duffy",
+                        "potmTeam": "RCB"
+                }
         },
         {
                 "id": 56,
@@ -697,8 +785,16 @@ const iplMatches = {
                 "venue": "Maharaja Yadavindra Singh Stadium, New Chandigarh",
                 "team1": "PBKS",
                 "team2": "KKR",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "KKR",
+                        "team1Score": "200/7 (20)",
+                        "team2Score": "208/5 (20)",
+                        "summary": "KKR won by 8 runs",
+                        "potm": "Ajinkya Rahane",
+                        "potmTeam": "KKR"
+                }
         },
         {
                 "id": 57,
@@ -708,8 +804,16 @@ const iplMatches = {
                 "venue": "Rajiv Gandhi International Cricket Stadium, Hyderabad",
                 "team1": "SRH",
                 "team2": "GT",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "SRH",
+                        "team1Score": "160/6 (19.3)",
+                        "team2Score": "157/5 (20)",
+                        "summary": "SRH won by 4 wickets",
+                        "potm": "Harshal Patel",
+                        "potmTeam": "SRH"
+                }
         },
         {
                 "id": 58,
@@ -719,8 +823,16 @@ const iplMatches = {
                 "venue": "Sawai Mansingh Stadium, Jaipur",
                 "team1": "RR",
                 "team2": "LSG",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "RR",
+                        "team1Score": "168/4 (17.2)",
+                        "team2Score": "165/8 (20)",
+                        "summary": "RR won by 6 wickets",
+                        "potm": "Kumar Kartikeya",
+                        "potmTeam": "RR"
+                }
         },
         {
                 "id": 59,
@@ -730,8 +842,16 @@ const iplMatches = {
                 "venue": "Arun Jaitley Stadium, Delhi",
                 "team1": "DC",
                 "team2": "CSK",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "CSK",
+                        "team1Score": "177/8 (20)",
+                        "team2Score": "181/3 (17.5)",
+                        "summary": "CSK won by 7 wickets",
+                        "potm": "Matthew Short",
+                        "potmTeam": "CSK"
+                }
         },
         {
                 "id": 60,
@@ -741,8 +861,16 @@ const iplMatches = {
                 "venue": "Eden Gardens, Kolkata",
                 "team1": "KKR",
                 "team2": "MI",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "MI",
+                        "team1Score": "206/7 (20)",
+                        "team2Score": "220/3 (20)",
+                        "summary": "MI won by 14 runs",
+                        "potm": "Hardik Pandya",
+                        "potmTeam": "MI"
+                }
         },
         {
                 "id": 61,
@@ -752,8 +880,16 @@ const iplMatches = {
                 "venue": "M. Chinnaswamy Stadium, Bengaluru",
                 "team1": "RCB",
                 "team2": "PBKS",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "PBKS",
+                        "team1Score": "146/9 (20)",
+                        "team2Score": "189/6 (20)",
+                        "summary": "PBKS won by 43 runs",
+                        "potm": "Yash Thakur",
+                        "potmTeam": "PBKS"
+                }
         },
         {
                 "id": 62,
@@ -763,8 +899,16 @@ const iplMatches = {
                 "venue": "Narendra Modi Stadium, Ahmedabad",
                 "team1": "GT",
                 "team2": "DC",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "DC",
+                        "team1Score": "169/8 (20)",
+                        "team2Score": "208/3 (20)",
+                        "summary": "DC won by 39 runs",
+                        "potm": "Auqib Nabi Dar",
+                        "potmTeam": "DC"
+                }
         },
         {
                 "id": 63,
@@ -774,8 +918,16 @@ const iplMatches = {
                 "venue": "Rajiv Gandhi International Cricket Stadium, Hyderabad",
                 "team1": "SRH",
                 "team2": "RCB",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "RCB",
+                        "team1Score": "167/6 (20)",
+                        "team2Score": "172/2 (19.3)",
+                        "summary": "RCB won by 8 wickets",
+                        "potm": "Phil Salt",
+                        "potmTeam": "RCB"
+                }
         },
         {
                 "id": 64,
@@ -785,8 +937,16 @@ const iplMatches = {
                 "venue": "BRSABV Ekana Cricket Stadium, Lucknow",
                 "team1": "LSG",
                 "team2": "PBKS",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "LSG",
+                        "team1Score": "220/5 (20)",
+                        "team2Score": "175/10 (20)",
+                        "summary": "LSG won by 45 runs",
+                        "potm": "Digvesh Singh",
+                        "potmTeam": "LSG"
+                }
         },
         {
                 "id": 65,
@@ -796,8 +956,16 @@ const iplMatches = {
                 "venue": "Wankhede Stadium, Mumbai",
                 "team1": "MI",
                 "team2": "RR",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "MI",
+                        "team1Score": "194/6 (17.5)",
+                        "team2Score": "188/6 (20)",
+                        "summary": "MI won by 4 wickets",
+                        "potm": "Tilak Varma",
+                        "potmTeam": "MI"
+                }
         },
         {
                 "id": 66,
@@ -807,8 +975,16 @@ const iplMatches = {
                 "venue": "MA Chidambaram Stadium, Chennai",
                 "team1": "CSK",
                 "team2": "GT",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "GT",
+                        "team1Score": "148/7 (20)",
+                        "team2Score": "172/5 (20)",
+                        "summary": "GT won by 24 runs",
+                        "potm": "Ishant Sharma",
+                        "potmTeam": "GT"
+                }
         },
         {
                 "id": 67,
@@ -818,8 +994,16 @@ const iplMatches = {
                 "venue": "Eden Gardens, Kolkata",
                 "team1": "KKR",
                 "team2": "SRH",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "KKR",
+                        "team1Score": "170/6 (20)",
+                        "team2Score": "161/10 (20)",
+                        "summary": "KKR won by 9 runs",
+                        "potm": "Manish Pandey",
+                        "potmTeam": "KKR"
+                }
         },
         {
                 "id": 68,
@@ -829,8 +1013,16 @@ const iplMatches = {
                 "venue": "Sawai Mansingh Stadium, Jaipur",
                 "team1": "RR",
                 "team2": "CSK",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "RR",
+                        "team1Score": "179/6 (19.4)",
+                        "team2Score": "175/6 (20)",
+                        "summary": "RR won by 4 wickets",
+                        "potm": "Shimron Hetmyer",
+                        "potmTeam": "RR"
+                }
         },
         {
                 "id": 69,
@@ -840,8 +1032,16 @@ const iplMatches = {
                 "venue": "Arun Jaitley Stadium, Delhi",
                 "team1": "DC",
                 "team2": "LSG",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "DC",
+                        "team1Score": "210/5 (20)",
+                        "team2Score": "180/8 (20)",
+                        "summary": "DC won by 30 runs",
+                        "potm": "Auqib Nabi Dar",
+                        "potmTeam": "DC"
+                }
         },
         {
                 "id": 70,
@@ -851,8 +1051,16 @@ const iplMatches = {
                 "venue": "Narendra Modi Stadium, Ahmedabad",
                 "team1": "GT",
                 "team2": "PBKS",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "PBKS",
+                        "team1Score": "147/6 (20)",
+                        "team2Score": "150/2 (18.1)",
+                        "summary": "PBKS won by 8 wickets",
+                        "potm": "Suryansh Shedge",
+                        "potmTeam": "PBKS"
+                }
         },
         {
                 "id": 71,
@@ -862,8 +1070,16 @@ const iplMatches = {
                 "venue": "Rajiv Gandhi International Cricket Stadium, Hyderabad",
                 "team1": "SRH",
                 "team2": "PBKS",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "SRH",
+                        "team1Score": "165/3 (20)",
+                        "team2Score": "120/6 (20)",
+                        "summary": "SRH won by 45 runs",
+                        "potm": "Liam Livingstone",
+                        "potmTeam": "SRH"
+                }
         },
         {
                 "id": 72,
@@ -873,8 +1089,16 @@ const iplMatches = {
                 "venue": "Wankhede Stadium, Mumbai",
                 "team1": "MI",
                 "team2": "DC",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "MI",
+                        "team1Score": "220/5 (20)",
+                        "team2Score": "211/10 (20)",
+                        "summary": "MI won by 9 runs",
+                        "potm": "Hardik Pandya",
+                        "potmTeam": "MI"
+                }
         },
         {
                 "id": 73,
@@ -884,8 +1108,16 @@ const iplMatches = {
                 "venue": "M. Chinnaswamy Stadium, Bengaluru",
                 "team1": "RCB",
                 "team2": "KKR",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "RCB",
+                        "team1Score": "156/7 (19.5)",
+                        "team2Score": "153/9 (20)",
+                        "summary": "RCB won by 3 wickets",
+                        "potm": "Bhuvneshwar Kumar",
+                        "potmTeam": "RCB"
+                }
         },
         {
                 "id": 74,
@@ -895,8 +1127,16 @@ const iplMatches = {
                 "venue": "BRSABV Ekana Cricket Stadium, Lucknow",
                 "team1": "LSG",
                 "team2": "RR",
-                "status": "upcoming",
-                "category": "league"
+                "status": "completed",
+                "category": "league",
+                "result": {
+                        "winner": "RR",
+                        "team1Score": "191/8 (20)",
+                        "team2Score": "194/2 (17.4)",
+                        "summary": "RR won by 8 wickets",
+                        "potm": "Lhuan-Dre Pretorius",
+                        "potmTeam": "RR"
+                }
         },
         {
                 "id": 75,
@@ -906,7 +1146,7 @@ const iplMatches = {
                 "venue": "TBA",
                 "team1": "TBA",
                 "team2": "TBA",
-                "status": "upcoming",
+                "status": "completed",
                 "category": "playoff"
         },
         {
@@ -917,7 +1157,7 @@ const iplMatches = {
                 "venue": "TBA",
                 "team1": "TBA",
                 "team2": "TBA",
-                "status": "upcoming",
+                "status": "completed",
                 "category": "playoff"
         },
         {
@@ -928,7 +1168,7 @@ const iplMatches = {
                 "venue": "TBA",
                 "team1": "TBA",
                 "team2": "TBA",
-                "status": "upcoming",
+                "status": "completed",
                 "category": "playoff"
         },
         {
@@ -939,7 +1179,7 @@ const iplMatches = {
                 "venue": "M. Chinnaswamy Stadium, Bengaluru",
                 "team1": "TBA",
                 "team2": "TBA",
-                "status": "upcoming",
+                "status": "live",
                 "category": "final"
         }
 ]

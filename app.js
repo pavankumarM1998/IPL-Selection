@@ -1003,10 +1003,22 @@ class MatchSchedule {
         // Filter matches
         let filteredMatches = this.app.matches.matches;
 
+        // Runtime fix: re-classify past matches whose status is still "upcoming"
+        const nowIST = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+        this.app.matches.matches.forEach(match => {
+            if (match.status === 'upcoming') {
+                const matchDateTime = new Date(`${match.date}T${match.time}:00+05:30`);
+                matchDateTime.setHours(matchDateTime.getHours() + 4); // allow 4hrs for match to finish
+                if (matchDateTime < nowIST) {
+                    match.status = 'completed';
+                }
+            }
+        });
+
         if (this.currentFilter !== 'all') {
             filteredMatches = this.app.matches.matches.filter(match => {
                 if (this.currentFilter === 'upcoming') {
-                    return match.status === 'upcoming';
+                    return match.status === 'upcoming' && match.team1 !== 'TBA';
                 }
                 return match.category === this.currentFilter;
             });

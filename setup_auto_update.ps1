@@ -8,19 +8,17 @@ $ProjectDir  = "c:\flutter_projects\Cricket"
 $ScriptPath  = "$ProjectDir\daily_update.py"
 $VenvPython  = "$ProjectDir\.venv\Scripts\python.exe"
 
-# --- Find Python: prefer venv, then global ---
-if (Test-Path $VenvPython) {
+# --- Find Python: prefer global first, then venv ---
+$PythonCmd = Get-Command python -ErrorAction SilentlyContinue
+if ($PythonCmd) {
+    $PythonExe = $PythonCmd.Source
+    Write-Host "Using global Python: $PythonExe" -ForegroundColor Green
+} elseif (Test-Path $VenvPython) {
     $PythonExe = $VenvPython
-    Write-Host "Using venv Python: $PythonExe" -ForegroundColor Green
+    Write-Host "Using venv Python: $PythonExe" -ForegroundColor Yellow
 } else {
-    $PythonCmd = Get-Command python -ErrorAction SilentlyContinue
-    if ($PythonCmd) {
-        $PythonExe = $PythonCmd.Source
-        Write-Host "Using global Python: $PythonExe" -ForegroundColor Yellow
-    } else {
-        Write-Host "Python not found. Please install Python and try again." -ForegroundColor Red
-        exit 1
-    }
+    Write-Host "Python not found. Please install Python and try again." -ForegroundColor Red
+    exit 1
 }
 
 # --- Install required dependencies ---
@@ -34,8 +32,8 @@ $Action = New-ScheduledTaskAction `
     -WorkingDirectory $ProjectDir
 
 # --- TWO triggers ---
-# Trigger 1: Daily at 8:00 AM
-$TriggerDaily = New-ScheduledTaskTrigger -Daily -At "8:00AM"
+# Trigger 1: Daily at 12:00 AM (Midnight IST)
+$TriggerDaily = New-ScheduledTaskTrigger -Daily -At "12:00AM"
 
 # Trigger 2: At logon of the current user (catches missed runs)
 $TriggerLogon = New-ScheduledTaskTrigger -AtLogOn -User ([System.Security.Principal.WindowsIdentity]::GetCurrent().Name)
@@ -62,12 +60,12 @@ Register-ScheduledTask `
     -Trigger @($TriggerDaily, $TriggerLogon) `
     -Settings $Settings `
     -Principal $Principal `
-    -Description "IPL 2026 daily match status auto-updater. Runs at 8AM + on every login." `
+    -Description "IPL 2026 daily match status auto-updater. Runs at 12AM + on every login." `
     -Force | Out-Null
 
 Write-Host ""
 Write-Host "Automatic Update Fully Configured!" -ForegroundColor Green
-Write-Host "  Trigger 1 : Every day at 8:00 AM"
+Write-Host "  Trigger 1 : Every day at 12:00 AM (Midnight IST)"
 Write-Host "  Trigger 2 : Every time you log into Windows"
 Write-Host "  Catch-up  : Runs immediately if a previous day was missed (StartWhenAvailable)"
 Write-Host "  Script    : $ScriptPath"
