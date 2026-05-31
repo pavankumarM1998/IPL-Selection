@@ -916,10 +916,35 @@ style.textContent = `
 document.head.appendChild(style);
 
 // Match Schedule Manager
+// ===== GLOBAL GEMINI API KEY =====
+// Paste your API key obtained from Google AI Studio here:
+window.GEMINI_API_KEY = "AIzaSyCWIQWBYGhmQ5qNivHsV0VlOouv1vFvKf8";
+// =================================
+
 class MatchSchedule {
     constructor(app) {
         this.app = app;
         this.currentFilter = 'all';
+        this.aiPreviewCache = {}; // Cache AI responses
+        
+        // Initialize AI Modal elements
+        this.aiModal = document.getElementById('aiAnalysisModal');
+        this.aiModalBody = document.getElementById('aiModalBody');
+        this.closeAiModalBtn = document.getElementById('closeAiModalBtn');
+        
+        if (this.closeAiModalBtn) {
+            this.closeAiModalBtn.onclick = () => {
+                if (this.aiModal) this.aiModal.classList.add('hidden');
+            };
+        }
+        
+        // Close modal on outside click
+        window.onclick = (event) => {
+            if (event.target === this.aiModal) {
+                this.aiModal.classList.add('hidden');
+            }
+        };
+
         this.setupMatchesEventListeners();
     }
 
@@ -949,8 +974,11 @@ class MatchSchedule {
         if (navMatchesBtn) navMatchesBtn.classList.add('active');
         if (navSquadsBtn) navSquadsBtn.classList.remove('active');
 
+        // Render matches list
         this.renderMatches();
     }
+
+    // Removed setupSectionTabs 
 
     setupMatchesEventListeners() {
         // Filter tabs
@@ -968,9 +996,9 @@ class MatchSchedule {
         });
     }
 
-    renderMatches() {
+    async renderMatches() {
         const matchesList = document.getElementById('matchesList');
-        matchesList.innerHTML = '';
+        matchesList.innerHTML = '<div class="pred-loading"><div class="pred-loading-spinner"></div><p>Loading matches…</p></div>';
 
         // Filter matches
         let filteredMatches = this.app.matches.matches;
@@ -984,10 +1012,27 @@ class MatchSchedule {
             });
         }
 
+        // Pre-fetch predictions for upcoming matches
+        const upcomingInView = filteredMatches.filter(m => m.status === 'upcoming' && m.team1 !== 'TBA');
+        let allMatchData = [];
+        if (upcomingInView.length > 0) {
+            allMatchData = await Promise.all(
+                upcomingInView.map(m => this._fetchMatchPrediction(m.id))
+            );
+        }
+
+        matchesList.innerHTML = '';
+
         // Render match cards
         filteredMatches.forEach(match => {
-            const matchCard = this.createMatchCard(match);
-            matchesList.appendChild(matchCard);
+            if (match.status === 'upcoming' && match.team1 !== 'TBA') {
+                const dataIndex = upcomingInView.findIndex(m => m.id === match.id);
+                const matchData = dataIndex !== -1 ? allMatchData[dataIndex] : {};
+                matchesList.appendChild(this.createPredictionCard(match, matchData));
+            } else {
+                const matchCard = this.createMatchCard(match);
+                matchesList.appendChild(matchCard);
+            }
         });
 
         // Show empty state if no matches
@@ -1000,131 +1045,610 @@ class MatchSchedule {
         }
     }
 
+    async fetchAIPreview(matchId, team1Name, team2Name) {
+        const contentDiv = document.getElementById(`ai-preview-content-${matchId}`);
+        const btn = contentDiv ? contentDiv.previousElementSibling : null;
+        
+        // Show modal if already cached
+        if (this.aiPreviewCache[matchId]) {
+            this.showAiModal(this.aiPreviewCache[matchId], `${team1Name} vs ${team2Name} Analysis`);
+            return;
+        }
+
+        if (!btn) return;
+
+        // Show loading state on button
+        btn.innerHTML = '⏳ Analyzing...';
+        btn.disabled = true;
+
+        try {
+            const prompt = `You are an expert IPL cricket analyst. Provide a comprehensive match analysis for the upcoming IPL 2026 match between ${team1Name} and ${team2Name}.
+            
+            Please include these specific sections using HTML formatting (<strong>, <br>, <ul>, <li>):
+            
+            1. 🏟️ Venue & Pitch: Where is it happening and what are the conditions?
+            2. 📈 Team Form: Recent performance trends for both sides.
+            3. ⚔️ Head-to-Head: Historical records and "fixers" (past performance) between them.
+            4. 🌟 Key Players: Top stars from each team to watch.
+            5. 🏏 Probable XI: The most likely playing 11 for both squads.
+            
+            Keep it professional, insightful, and concise. Do not use markdown backticks.`;
+
+            let aiText = '';
+            let success = false;
+
+            // 1. Try Gemini API first 
+            if (window.GEMINI_API_KEY && window.GEMINI_API_KEY !== "YOUR_API_KEY_HERE") {
+                const models = ['gemini-2.0-flash', 'gemini-1.5-flash-latest'];
+                for (const model of models) {
+                    try {
+                        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${window.GEMINI_API_KEY}`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                        });
+                        const data = await response.json();
+                        if (!data.error && data.candidates && data.candidates[0]) {
+                            aiText = data.candidates[0].content.parts[0].text;
+                            success = true;
+                            break;
+                        }
+                    } catch (e) {
+                        console.warn(`Gemini (${model}) failed:`, e);
+                    }
+                }
+            }
+
+            // 2. Fallback to Pollinations AI (POST)
+            if (!success) {
+                console.log("Gemini hit limits. Falling back to free Pollinations AI...");
+                const systemPrompt = "You are a professional IPL cricket expert. Do not mention ANY API notices or maintenance updates. Provide ONLY the match analysis in HTML format.";
+                
+                try {
+                    const response = await fetch('https://text.pollinations.ai/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            messages: [
+                                { role: 'system', content: systemPrompt },
+                                { role: 'user', content: prompt }
+                            ],
+                            model: 'openai',
+                            seed: Math.floor(Math.random() * 1000)
+                        })
+                    });
+                    
+                    if (!response.ok) throw new Error("Free AI Fallback failed.");
+                    
+                    const responseText = await response.text();
+                    if (responseText && responseText.length > 50) {
+                        aiText = responseText;
+                        success = true;
+                    } else {
+                        throw new Error("Invalid response from Free AI API.");
+                    }
+                } catch (e) {
+                    console.error("Pollinations POST error:", e);
+                    throw e;
+                }
+            }
+            
+            // CLEANUPS
+            if (aiText) {
+                // 1. Remove markdown backticks
+                aiText = aiText.replace(/```html\n?/g, '').replace(/```\n?/g, '');
+                // 2. Remove Pollinations Notice / Deprecation message if it crept in
+                aiText = aiText.replace(/⚠️\s*\*\*IMPORTANT NOTICE\*\*[\s\S]*?normally\./gi, '').trim();
+                aiText = aiText.replace(/Pollinations legacy text API is being deprecated.*?normally\./gi, '').trim();
+                
+                // Cache and display in Modal
+                this.aiPreviewCache[matchId] = aiText;
+                this.showAiModal(aiText, `${team1Name} vs ${team2Name} Analysis`);
+                
+                btn.innerHTML = '✨ Match Analysis';
+                btn.disabled = false;
+            } else {
+                throw new Error("Could not generate analysis.");
+            }
+
+        } catch (error) {
+            console.error("AI Error:", error);
+            this.app.showToast("Analysis Error: " + error.message, "error");
+            btn.innerHTML = '✨ Try Again';
+            btn.disabled = false;
+        }
+    }
+
+    showAiModal(content, title) {
+        if (!this.aiModal || !this.aiModalBody) return;
+        
+        const modalHeader = this.aiModal.querySelector('.ai-modal-header h2');
+        if (modalHeader) modalHeader.textContent = title;
+        
+        this.aiModalBody.innerHTML = content;
+        this.aiModal.classList.remove('hidden');
+    }
+
     createMatchCard(match) {
         const card = document.createElement('div');
-        card.className = `match-card ${match.category}`;
+        card.className = `match-card ${match.category} ${match.status === 'completed' ? 'match-completed' : ''}`;
 
-        // Format date and time
         const matchDate = new Date(match.date);
         const dateStr = matchDate.toLocaleDateString('en-US', {
-            weekday: 'short',
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric'
+            weekday: 'short', year: 'numeric', month: 'short', day: 'numeric'
         });
 
-        // Get team details (convert to lowercase to match team IDs)
         const team1Data = this.app.data.teams.find(t => t.id === match.team1.toLowerCase()) || { shortName: match.team1 };
         const team2Data = this.app.data.teams.find(t => t.id === match.team2.toLowerCase()) || { shortName: match.team2 };
 
+        const logoHtml = (team) => team.logo
+            ? `<img src="${team.logo}" alt="${team.shortName}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+               <div class="logo-fallback-small" style="display:none;">${team.shortName}</div>`
+            : `<div class="logo-fallback-small">${team.shortName}</div>`;
+
+        // ── Completed match with/without results ─────────────────────────────────────
+        if (match.status === 'completed') {
+            let resultHtml = '';
+            
+            if (match.result) {
+                const r = match.result;
+                const winnerData = this.app.data.teams.find(t => t.id === r.winner.toLowerCase()) || { shortName: r.winner, color: '#667eea' };
+                const winColor = winnerData.color || '#667eea';
+                const t1Won = r.winner === match.team1;
+                const t2Won = r.winner === match.team2;
+
+                const t1isWinner = t1Won;
+
+                resultHtml = `
+                    <div class="match-teams">
+                        <div class="match-team ${t1Won ? 'team-winner' : 'team-loser'}">
+                            <div class="team-logo-small">${logoHtml(team1Data)}</div>
+                            <div class="team-shortname">${team1Data.shortName}</div>
+                            ${t1Won ? '<div class="winner-crown">👑</div>' : ''}
+                        </div>
+                        <div class="match-vs-result">
+                            <div class="match-vs">VS</div>
+                            <div class="match-final-badge">Final</div>
+                        </div>
+                        <div class="match-team ${t2Won ? 'team-winner' : 'team-loser'}">
+                            <div class="team-logo-small">${logoHtml(team2Data)}</div>
+                            <div class="team-shortname">${team2Data.shortName}</div>
+                            ${t2Won ? '<div class="winner-crown">👑</div>' : ''}
+                        </div>
+                    </div>
+
+                    <!-- Scorecard -->
+                    <div class="match-scorecard">
+                        <div class="scorecard-row ${t1Won ? 'score-winner' : 'score-loser'}">
+                            <span class="score-team-name">${team1Data.shortName}</span>
+                            <span class="score-runs">${r.team1Score}</span>
+                        </div>
+                        <div class="scorecard-row ${t2Won ? 'score-winner' : 'score-loser'}">
+                            <span class="score-team-name">${team2Data.shortName}</span>
+                            <span class="score-runs">${r.team2Score}</span>
+                        </div>
+                        <div class="result-summary" style="border-left: 3px solid ${winColor};">
+                            🏆 ${r.summary}
+                        </div>
+                    </div>
+
+                    <!-- Player of the Match -->
+                    <div class="potm-section">
+                        <div class="potm-icon">⭐</div>
+                        <div class="potm-info">
+                            <div class="potm-label">Player of the Match</div>
+                            <div class="potm-name">${r.potm}</div>
+                            <div class="potm-team">${r.potmTeam}</div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Missing result data fallback
+                resultHtml = `
+                    <div class="match-teams">
+                        <div class="match-team">
+                            <div class="team-logo-small">${logoHtml(team1Data)}</div>
+                            <div class="team-shortname">${team1Data.shortName}</div>
+                        </div>
+                        <div class="match-vs-result">
+                            <div class="match-vs">VS</div>
+                            <div class="match-final-badge">Completed</div>
+                        </div>
+                        <div class="match-team">
+                            <div class="team-logo-small">${logoHtml(team2Data)}</div>
+                            <div class="team-shortname">${team2Data.shortName}</div>
+                        </div>
+                    </div>
+                    <div class="match-scorecard" style="text-align:center; padding: 10px;">
+                        <span style="color:var(--color-text-secondary); font-style:italic;">Results pending update...</span>
+                    </div>
+                `;
+            }
+
+            card.innerHTML = `
+                <div class="match-number">
+                    Match ${match.matchNumber}
+                    <span class="match-category ${match.category}">${match.category}</span>
+                    <span class="match-done-badge">RESULT</span>
+                </div>
+                ${resultHtml}
+                
+                <div class="match-info">
+                    <div class="match-datetime">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        ${dateStr} • ${match.time} IST
+                    </div>
+                    <div class="match-venue">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        ${match.venue}
+                    </div>
+                </div>
+            `;
+
+            // Completed matches are not clickable for match builder or prediction
+            card.style.cursor = 'default';
+            return card;
+        }
+
+        // ── Upcoming / Live match card (original layout) ──────────────────────
         card.innerHTML = `
             <div class="match-number">
                 Match ${match.matchNumber}
                 <span class="match-category ${match.category}">${match.category}</span>
             </div>
-            
+
             <div class="match-teams">
                 <div class="match-team">
-                    <div class="team-logo-small">
-                        ${team1Data.logo ? `
-                            <img src="${team1Data.logo}" alt="${team1Data.shortName}" 
-                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div class="logo-fallback-small" style="display:none;">${team1Data.shortName}</div>
-                        ` : `<div class="logo-fallback-small">${team1Data.shortName}</div>`}
-                    </div>
+                    <div class="team-logo-small">${logoHtml(team1Data)}</div>
                     <div class="team-shortname">${team1Data.shortName}</div>
                 </div>
                 <div class="match-vs">VS</div>
                 <div class="match-team">
-                    <div class="team-logo-small">
-                        ${team2Data.logo ? `
-                            <img src="${team2Data.logo}" alt="${team2Data.shortName}"
-                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div class="logo-fallback-small" style="display:none;">${team2Data.shortName}</div>
-                        ` : `<div class="logo-fallback-small">${team2Data.shortName}</div>`}
-                    </div>
+                    <div class="team-logo-small">${logoHtml(team2Data)}</div>
                     <div class="team-shortname">${team2Data.shortName}</div>
                 </div>
             </div>
 
-
             <div class="match-info">
                 <div class="match-datetime">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"/>
-                        <polyline points="12 6 12 12 16 14"/>
+                        <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
                     </svg>
                     ${dateStr} • ${match.time} IST
                 </div>
                 <div class="match-venue">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                        <circle cx="12" cy="10" r="3"/>
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
                     </svg>
                     ${match.venue}
                 </div>
                 ${match.description ? `<div class="match-description">${match.description}</div>` : ''}
             </div>
+            
+            <!-- AI Preview Section -->
+            <div class="ai-preview-container" onclick="event.stopPropagation();">
+                <button class="btn ai-preview-btn" onclick="event.stopPropagation(); window.app.matchSchedule.fetchAIPreview(${match.id}, '${team1Data.name || team1Data.shortName}', '${team2Data.name || team2Data.shortName}')">
+                    ✨ Generate AI Preview
+                </button>
+                <div id="ai-preview-content-${match.id}" class="ai-preview-content" style="display: none;">
+                    <div class="typing-indicator">Analyzing H2H, players, and match conditions...</div>
+                </div>
+            </div>
         `;
 
-        // Tooltip for better UX
-        card.title = "Click to Create Fantasy Team";
-
-        // Make card clickable via attribute for robustness
+        card.title = "Click to Predict Winner";
         card.style.cursor = 'pointer';
         card.setAttribute('onclick', `window.app.matchSchedule.handleMatchClick(${match.id})`);
+        return card;
+    }
+
+
+    handleMatchClick(matchId) {
+        console.log("Routing click to prediction for match:", matchId);
+        
+        // Find the prediction tab and click it
+        const tabPrediction = document.getElementById('tabPrediction');
+        if (tabPrediction) {
+            tabPrediction.click();
+            
+            // Wait for prediction cards to render then scroll to it
+            setTimeout(() => {
+                const predCard = document.getElementById(`pred-card-${matchId}`);
+                if (predCard) {
+                    predCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                    // Add a brief highlight effect
+                    const originalBorder = predCard.style.border;
+                    predCard.style.border = '2px solid var(--color-accent-purple)';
+                    predCard.style.boxShadow = '0 0 20px rgba(162, 102, 234, 0.4)';
+                    
+                    setTimeout(() => {
+                        predCard.style.border = originalBorder;
+                        predCard.style.boxShadow = '';
+                    }, 2000);
+
+                    // ✅ Trigger AI Analysis automatically if it hasn't been generated yet
+                    const match = this.app.matches.matches.find(m => m.id === matchId);
+                    if (match && !this.aiPreviewCache[matchId]) {
+                        const team1Data = this.app.data.teams.find(t => t.id === match.team1.toLowerCase()) || { shortName: match.team1 };
+                        const team2Data = this.app.data.teams.find(t => t.id === match.team2.toLowerCase()) || { shortName: match.team2 };
+                        this.fetchAIPreview(matchId, team1Data.name || team1Data.shortName, team2Data.name || team2Data.shortName);
+                    }
+                }
+            }, 600); // 600ms delay to allow Firestore fetch and DOM render
+        }
+    }
+
+    // ============================================
+    //  PREDICTION FEATURE  (Firestore-backed)
+    // ============================================
+
+    // Get current user UID (null if not signed in)
+    _getCurrentUID() {
+        try {
+            const user = typeof firebaseAuth !== 'undefined' && firebaseAuth.currentUser;
+            return user ? user.uid : null;
+        } catch (e) { return null; }
+    }
+
+    // Fetch community vote totals + current user's vote from Firestore
+    // Fetches BOTH docs in parallel for speed
+    async _fetchMatchPrediction(matchId) {
+        const uid = this._getCurrentUID();
+        const docId = `match_${matchId}`;
+
+        try {
+            if (typeof firebaseFirestore !== 'undefined') {
+                const fs = window.firebaseFirestore;
+                const mainRef = fs.collection('predictions').doc(docId);
+
+                // Fetch community totals AND user's vote simultaneously
+                const fetches = [mainRef.get()];
+                if (uid) fetches.push(mainRef.collection('userVotes').doc(uid).get());
+
+                const [mainDoc, userVoteDoc] = await Promise.all(fetches);
+
+                return {
+                    team1Votes: mainDoc.exists ? (mainDoc.data().team1Votes || 0) : 0,
+                    team2Votes: mainDoc.exists ? (mainDoc.data().team2Votes || 0) : 0,
+                    userVote:   (userVoteDoc && userVoteDoc.exists) ? userVoteDoc.data().team : null
+                };
+            }
+        } catch (e) {
+            console.warn('Firestore prediction fetch failed:', e.message);
+        }
+
+        return { team1Votes: 0, team2Votes: 0, userVote: null };
+    }
+
+
+    // Build a single prediction card DOM element
+    // matchData = { team1Votes, team2Votes, userVote }
+    createPredictionCard(match, matchData = {}) {
+        const card = document.createElement('div');
+        card.className = 'prediction-card';
+        card.id = `pred-card-${match.id}`;
+
+        const team1Data = this.app.data.teams.find(t => t.id === match.team1.toLowerCase())
+            || { shortName: match.team1, color: '#667eea' };
+        const team2Data = this.app.data.teams.find(t => t.id === match.team2.toLowerCase())
+            || { shortName: match.team2, color: '#f093fb' };
+
+        const matchDate = new Date(match.date);
+        const dateStr = matchDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+
+        const { team1Votes = 0, team2Votes = 0, userVote = null } = matchData;
+        const hasVoted = !!userVote;
+        const totalVotes = team1Votes + team2Votes;
+        const team1Pct = totalVotes > 0 ? Math.round((team1Votes / totalVotes) * 100) : 50;
+        const team2Pct = totalVotes > 0 ? 100 - team1Pct : 50;
+
+        const team1Color = team1Data.color || '#667eea';
+        const team2Color = team2Data.color || '#f093fb';
+
+        const logoImg = (team, color) => team.logo
+            ? `<img src="${team.logo}" alt="${team.shortName}" onerror="this.style.display='none'">`
+            : `<span style="font-size:1.4rem;font-weight:800;color:${color};">${team.shortName}</span>`;
+
+        // ---- 1. Header ----
+        const header = document.createElement('div');
+        header.className = 'pred-card-header';
+        header.innerHTML = `
+            <span class="pred-match-num">Match ${match.matchNumber}</span>
+            <span class="pred-date">${dateStr} \u2022 ${match.time} IST</span>
+        `;
+        card.appendChild(header);
+
+        // ---- 2. AI Analysis Button (top of card, proper addEventListener) ----
+        const aiContainer = document.createElement('div');
+        aiContainer.className = 'ai-preview-container';
+        aiContainer.style.cssText = 'margin-top:0.5rem;margin-bottom:0.75rem;border-top:none;padding-top:0;position:relative;z-index:20;';
+
+        const aiBtn = document.createElement('button');
+        aiBtn.type = 'button';
+        aiBtn.className = 'btn ai-preview-btn';
+        aiBtn.style.cssText = 'width:100%;cursor:pointer;position:relative;z-index:21;';
+        aiBtn.textContent = '✨ Match Analysis';
+        aiBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            this.fetchAIPreview(match.id, team1Data.name || team1Data.shortName, team2Data.name || team2Data.shortName);
+        });
+
+        const aiContent = document.createElement('div');
+        aiContent.id = `ai-preview-content-${match.id}`;
+        aiContent.className = 'ai-preview-content hidden';
+        aiContent.style.display = 'none';
+
+        aiContainer.appendChild(aiBtn);
+        aiContainer.appendChild(aiContent);
+        card.appendChild(aiContainer);
+
+        // ---- 3. Teams Row ----
+        const teamsRow = document.createElement('div');
+        teamsRow.className = 'pred-teams-row';
+        teamsRow.innerHTML = `
+            <div class="pred-team ${hasVoted && userVote === 'team1' ? 'voted-team' : ''}">
+                <div class="pred-team-logo" style="background:linear-gradient(135deg,${team1Color}33,${team1Color}11);">
+                    ${logoImg(team1Data, team1Color)}
+                </div>
+                <div class="pred-team-name">${team1Data.shortName}</div>
+            </div>
+            <div class="pred-vs-center">
+                <div class="pred-vs">VS</div>
+                <div class="pred-venue">${match.venue.split(',')[0]}</div>
+            </div>
+            <div class="pred-team ${hasVoted && userVote === 'team2' ? 'voted-team' : ''}">
+                <div class="pred-team-logo" style="background:linear-gradient(135deg,${team2Color}33,${team2Color}11);">
+                    ${logoImg(team2Data, team2Color)}
+                </div>
+                <div class="pred-team-name">${team2Data.shortName}</div>
+            </div>
+        `;
+        card.appendChild(teamsRow);
+
+        // ---- 4. Vote / Result Section ----
+        const voteSection = document.createElement('div');
+        if (hasVoted) {
+            voteSection.className = 'pred-result-section';
+            voteSection.innerHTML = `
+                <div class="pred-voted-label">
+                    \u2705 You predicted: <strong>${userVote === 'team1' ? team1Data.shortName : team2Data.shortName}</strong>
+                    &nbsp;\u2022&nbsp; <span class="pred-community-label">Community (${totalVotes} vote${totalVotes !== 1 ? 's' : ''})</span>
+                </div>
+                <div class="pred-bar-container">
+                    <div class="pred-bar-label">
+                        <span style="color:${team1Color}">${team1Data.shortName}</span>
+                        <span style="color:${team2Color}">${team2Data.shortName}</span>
+                    </div>
+                    <div class="pred-bar-track">
+                        <div class="pred-bar-fill" style="width:${team1Pct}%;background:${team1Color};"></div>
+                        <div class="pred-bar-fill" style="width:${team2Pct}%;background:${team2Color};"></div>
+                    </div>
+                    <div class="pred-bar-pct">
+                        <span style="color:${team1Color}">${team1Pct}%</span>
+                        <span style="color:${team2Color}">${team2Pct}%</span>
+                    </div>
+                </div>
+            `;
+        } else {
+            voteSection.className = 'pred-vote-section';
+            voteSection.innerHTML = `
+                <div class="pred-prompt">\ud83d\udd2e Who will win?</div>
+                <div class="pred-buttons">
+                    <button type="button" class="pred-btn" id="vote-t1-${match.id}" style="--team-color:${team1Color}">
+                        <span class="pred-btn-logo">${team1Data.logo ? `<img src="${team1Data.logo}" alt="${team1Data.shortName}" onerror="this.style.display='none'">` : ''}</span>
+                        <span class="pred-btn-name">${team1Data.shortName}</span>
+                        <span class="pred-btn-arrow">\u2192</span>
+                    </button>
+                    <button type="button" class="pred-btn" id="vote-t2-${match.id}" style="--team-color:${team2Color}">
+                        <span class="pred-btn-logo">${team2Data.logo ? `<img src="${team2Data.logo}" alt="${team2Data.shortName}" onerror="this.style.display='none'">` : ''}</span>
+                        <span class="pred-btn-name">${team2Data.shortName}</span>
+                        <span class="pred-btn-arrow">\u2192</span>
+                    </button>
+                </div>
+            `;
+            // Attach vote listeners
+            setTimeout(() => {
+                const vt1 = card.querySelector(`#vote-t1-${match.id}`);
+                const vt2 = card.querySelector(`#vote-t2-${match.id}`);
+                if (vt1) vt1.addEventListener('click', (e) => { e.stopPropagation(); this.castVote(match.id, 'team1'); });
+                if (vt2) vt2.addEventListener('click', (e) => { e.stopPropagation(); this.castVote(match.id, 'team2'); });
+            }, 0);
+        }
+        card.appendChild(voteSection);
 
         return card;
     }
 
-    handleMatchClick(matchId) {
-        console.log("Handling click for match ID:", matchId);
-        // Find match in app data
+    // Cast a vote — saves to Firestore, then refreshes the card
+    async castVote(matchId, teamChoice) {
+        const uid = this._getCurrentUID();
+
+        // 🔒 Must be signed in to vote
+        if (!uid) {
+            this.app.showToast('Please sign in to cast your prediction! 🔐', 'info');
+            // Open the sign-in modal
+            if (typeof authManager !== 'undefined') authManager.showAuthModal();
+            return;
+        }
+
+        const docId = `match_${matchId}`;
         const match = this.app.matches.matches.find(m => m.id === matchId);
+        if (!match) return;
 
-        if (!match) {
-            console.error("Match not found:", matchId);
-            this.app.showToast("Error finding match data", "error");
-            return;
-        }
+        const team1Data = this.app.data.teams.find(t => t.id === match.team1.toLowerCase()) || { shortName: match.team1 };
+        const team2Data = this.app.data.teams.find(t => t.id === match.team2.toLowerCase()) || { shortName: match.team2 };
+        const winnerName = teamChoice === 'team1' ? team1Data.shortName : team2Data.shortName;
 
-        this.selectMatch(match);
-    }
-
-    selectMatch(match) {
-        console.log("Selecting Match:", match);
-
-        // Check for MatchTeamBuilder
-        if (typeof MatchTeamBuilder === 'undefined') {
-            console.error("MatchTeamBuilder class is not defined. Script might not be loaded.");
-            this.app.showToast("System Error: Match Builder component not loaded", "error");
-            return;
-        }
-
-        // Check if both teams have data
-        const team1Data = this.app.data.teams.find(t => t.id === match.team1.toLowerCase());
-        const team2Data = this.app.data.teams.find(t => t.id === match.team2.toLowerCase());
-
-        console.log("Teams Found:", {
-            t1: team1Data ? team1Data.id : 'missing',
-            t2: team2Data ? team2Data.id : 'missing'
-        });
-
-        if (!team1Data || !team2Data) {
-            this.app.showToast(`Team data missing for ${match.team1} or ${match.team2}`, 'error');
-            return;
+        // Disable buttons immediately to prevent double-vote
+        const card = document.getElementById(`pred-card-${matchId}`);
+        if (card) {
+            card.querySelectorAll('.pred-btn').forEach(b => {
+                b.disabled = true;
+                b.style.opacity = '0.6';
+            });
         }
 
         try {
-            // Create and show match builder
-            this.app.matchBuilder = new MatchTeamBuilder(this.app, match);
-            this.app.matchBuilder.show();
+            if (typeof firebaseFirestore !== 'undefined') {
+                const fs = window.firebaseFirestore;
+                const mainRef  = fs.collection('predictions').doc(docId);
+                const userVoteRef = uid ? mainRef.collection('userVotes').doc(uid) : null;
+
+                // Guard: check if this user already voted (race-condition safety)
+                if (userVoteRef) {
+                    const existing = await userVoteRef.get();
+                    if (existing.exists) {
+                        this.app.showToast('You already voted for this match!', 'info');
+                        if (card) card.querySelectorAll('.pred-btn').forEach(b => { b.disabled = false; b.style.opacity = ''; });
+                        return;
+                    }
+                }
+
+                // ✅ Use a batch with set+merge + FieldValue.increment
+                //    This is atomic AND works whether the doc exists or not.
+                //    Fixes the bug where a transaction set() could overwrite a
+                //    concurrent set() from another account.
+                const batch = fs.batch();
+
+                batch.set(mainRef, {
+                    [`${teamChoice}Votes`]: firebase.firestore.FieldValue.increment(1)
+                }, { merge: true });
+
+                if (userVoteRef) {
+                    batch.set(userVoteRef, {
+                        team: teamChoice,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                }
+
+                await batch.commit();
+
+            } else {
+                console.warn('Firestore not available — vote not saved to backend');
+            }
         } catch (e) {
-            console.error("Error creating MatchTeamBuilder:", e);
-            this.app.showToast("Error launching Match Builder: " + e.message, "error");
+            console.error('Vote save failed:', e.message);
+            this.app.showToast('Could not save vote. Please try again.', 'error');
+            if (card) card.querySelectorAll('.pred-btn').forEach(b => { b.disabled = false; b.style.opacity = ''; });
+            return;
         }
+
+        // Fetch fresh data from Firestore and replace this card
+        const matchData = await this._fetchMatchPrediction(matchId);
+        const newCard = this.createPredictionCard(match, matchData);
+        if (card) card.replaceWith(newCard);
+
+        this.app.showToast(`🔮 Predicted ${winnerName} to win! Results shown above.`, 'success');
     }
 }
+
+
 
 // App Manager
 // Global Error Handler

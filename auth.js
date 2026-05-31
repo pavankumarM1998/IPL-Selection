@@ -69,6 +69,66 @@ class AuthManager {
         }
     }
 
+    // Sign in with Email/Password
+    async signInWithEmail(email, password) {
+        const errorEl = document.getElementById('authErrorMsg');
+        if (errorEl) errorEl.classList.add('hidden');
+        try {
+            await firebaseAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+            const result = await firebaseAuth.signInWithEmailAndPassword(email, password);
+            this.showToast(`Welcome back, ${result.user.email}!`, 'success');
+            this.hideAuthModal();
+        } catch (error) {
+            const msg = this.getErrorMessage(error);
+            if (errorEl) { errorEl.textContent = msg; errorEl.classList.remove('hidden'); }
+            else this.showToast(msg, 'error');
+        }
+    }
+
+    // Sign up with Email/Password
+    async signUpWithEmail(email, password) {
+        const errorEl = document.getElementById('authErrorMsg');
+        if (errorEl) errorEl.classList.add('hidden');
+        try {
+            await firebaseAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+            const result = await firebaseAuth.createUserWithEmailAndPassword(email, password);
+            this.showToast(`Account created! Welcome, ${result.user.email}!`, 'success');
+            this.hideAuthModal();
+        } catch (error) {
+            const msg = this.getErrorMessage(error);
+            if (errorEl) { errorEl.textContent = msg; errorEl.classList.remove('hidden'); }
+            else this.showToast(msg, 'error');
+        }
+    }
+
+    // Sign in Anonymously (Guest)
+    async signInAsGuest() {
+        try {
+            await firebaseAuth.signInAnonymously();
+            this.showToast('Signed in as Guest. Squads won\'t be saved permanently.', 'success');
+            this.hideAuthModal();
+        } catch (error) {
+            this.showToast(this.getErrorMessage(error), 'error');
+        }
+    }
+
+    // Get human-readable error message
+    getErrorMessage(error) {
+        const map = {
+            'auth/popup-closed-by-user': 'Sign-in cancelled.',
+            'auth/network-request-failed': 'Network error. Check your connection.',
+            'auth/web-storage-unsupported': 'Enable browser cookies and try again.',
+            'auth/unauthorized-domain': 'Domain not authorised. Use localhost.',
+            'auth/operation-not-allowed': 'This sign-in method is not enabled.',
+            'auth/user-not-found': 'No account found with that email.',
+            'auth/wrong-password': 'Incorrect password.',
+            'auth/email-already-in-use': 'An account with this email already exists.',
+            'auth/weak-password': 'Password should be at least 6 characters.',
+            'auth/invalid-email': 'Please enter a valid email address.',
+        };
+        return map[error.code] || error.message;
+    }
+
     // Sign out
     async signOut() {
         try {
@@ -172,24 +232,43 @@ document.addEventListener('DOMContentLoaded', () => {
     authManager = new AuthManager();
     window.authManager = authManager;
 
-    // Setup auth button listeners
+    // Auth open button
     const authButton = document.getElementById('authButton');
-    if (authButton) {
-        authButton.addEventListener('click', () => authManager.showAuthModal());
-    }
+    if (authButton) authButton.addEventListener('click', () => authManager.showAuthModal());
 
+    // Google sign-in
     const googleSignInBtn = document.getElementById('googleSignInBtn');
-    if (googleSignInBtn) {
-        googleSignInBtn.addEventListener('click', () => authManager.signInWithGoogle());
-    }
+    if (googleSignInBtn) googleSignInBtn.addEventListener('click', () => authManager.signInWithGoogle());
 
+    // Email sign-in
+    const emailSignInBtn = document.getElementById('emailSignInBtn');
+    if (emailSignInBtn) emailSignInBtn.addEventListener('click', () => {
+        const email = document.getElementById('authEmail').value.trim();
+        const password = document.getElementById('authPassword').value;
+        authManager.signInWithEmail(email, password);
+    });
+
+    // Email sign-up
+    const emailSignUpBtn = document.getElementById('emailSignUpBtn');
+    if (emailSignUpBtn) emailSignUpBtn.addEventListener('click', () => {
+        const email = document.getElementById('authEmail').value.trim();
+        const password = document.getElementById('authPassword').value;
+        authManager.signUpWithEmail(email, password);
+    });
+
+    // Guest / Anonymous
+    const guestSignInBtn = document.getElementById('guestSignInBtn');
+    if (guestSignInBtn) guestSignInBtn.addEventListener('click', () => authManager.signInAsGuest());
+
+    // Sign out
     const signOutBtn = document.getElementById('signOutBtn');
-    if (signOutBtn) {
-        signOutBtn.addEventListener('click', () => authManager.signOut());
-    }
+    if (signOutBtn) signOutBtn.addEventListener('click', () => authManager.signOut());
 
+    // Close modal (overlay click)
     const closeModalBtn = document.getElementById('closeAuthModal');
-    if (closeModalBtn) {
-        closeModalBtn.addEventListener('click', () => authManager.hideAuthModal());
-    }
+    if (closeModalBtn) closeModalBtn.addEventListener('click', () => authManager.hideAuthModal());
+
+    // Close modal (X button)
+    const closeModalXBtn = document.getElementById('closeAuthModalBtn');
+    if (closeModalXBtn) closeModalXBtn.addEventListener('click', () => authManager.hideAuthModal());
 });
