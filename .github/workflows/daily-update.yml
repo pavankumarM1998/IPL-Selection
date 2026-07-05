@@ -1,9 +1,9 @@
 name: IPL 2026 Daily Auto-Update
 
 on:
-  schedule:
-    # Run daily at 18:30 UTC (which is 00:00 IST / midnight IST)
-    - cron: '30 18 * * *'
+  # schedule:
+  #   # Run daily at 18:30 UTC (which is 00:00 IST / midnight IST)
+  #   - cron: '30 18 * * *'
   workflow_dispatch: # Allows manual trigger from GitHub UI
 
 permissions:
